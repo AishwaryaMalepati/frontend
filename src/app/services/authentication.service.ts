@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 export class AuthenticationService {
   public token: string;
 
-  constructor(private http: Http) {
+  constructor(private _http: Http) {
     // set token if saved in local storage
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
@@ -25,7 +25,7 @@ export class AuthenticationService {
     let options = new RequestOptions({
       headers: headers
     });
-   return this.http.post('http://138.197.101.197/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
+   return this._http.post('http://138.197.101.197/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;

@@ -1,4 +1,5 @@
-import {NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges} from '@angular/core';
+import {NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output,
+  EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 declare var jQuery: any;
 
@@ -33,7 +34,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
 
   @Input() contentHeight: any;
 
-  @Input() aspectRatio: number = 1.35;
+  @Input() aspectRatio:  1.35;
 
   @Input() eventLimit: any;
 
@@ -150,7 +151,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
       isRTL: this.rtl,
       weekends: this.weekends,
       hiddenDays: this.hiddenDays,
-      //lang: this.lang,
+      // lang: this.lang,
       fixedWeekCount: this.fixedWeekCount,
       weekNumbers: this.weekNumbers,
       businessHours: this.businessHours,

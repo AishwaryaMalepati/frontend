@@ -3,17 +3,23 @@
  */
 import {Injectable} from '@angular/core';
 import {Event} from '../model/event.model';
-import {Http} from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable()
 export class EventService {
 
-  private apiURL = ''
+  constructor(private http: Http,
+  private authenticationService: AuthenticationService) {}
 
-  /*getAll(): Event[] {
-    return[
-      {title: 'Atl', start: '2017-05-21', end: '2017-05-22'}
-    ];
-  }*/
+  getEvents() {
+    let headers = new Headers({ 'Authorization': 'JWT ' + this.authenticationService.token });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get('http://138.197.101.197/api/events/', options)
+      .toPromise();
+     // .then(res => <any[]> res.json().data)
+    //  .then(data => { return data; });
+  }
 }
+

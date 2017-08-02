@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import {EventService} from '../../services/event.service';
+import {HttpModule} from '@angular/http';
 
 @Component({
   selector: 'app-myschedule',
   templateUrl: './myschedule.component.html',
   styleUrls: ['./myschedule.component.css'],
+  providers: [EventService]
 })
 export class MyscheduleComponent implements OnInit {
   events: any[];
   headerConfig: any;
 
-  public constructor() { }
+  public constructor(private eventService: EventService) { }
 
-  ngOnInit(): void {
-    this.events = [
+  ngOnInit() {
+    this.eventService.getEvents().then( events => {
+      //this.events = events;
+      console.log(events); }) ;
+
+    /* this.events = [
       {
         "title": "All Day Event",
         "start": "2017-01-01"
@@ -36,7 +42,7 @@ export class MyscheduleComponent implements OnInit {
         "start": "2017-01-11",
         "end": "2017-01-13"
       }
-    ];
+    ];*/
     this.headerConfig = {
       left: 'prev,next today',
       center: 'title',
