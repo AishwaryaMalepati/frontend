@@ -5,8 +5,10 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { MyscheduleComponent } from './pages/myschedule/myschedule.component';
+import { CreatescheduleComponent } from './pages/createschedule/createschedule.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AllschedulesComponent } from './pages/allschedules/allschedules.component';
+import { PerdiemComponent } from './pages/perdiem/perdiem.component';
 import { AuthGuard } from './guards/index';
 export const routes: Routes = [
   {
@@ -30,6 +32,15 @@ export const routes: Routes = [
   {
     path: 'allschedules',
     component: AllschedulesComponent
+  },
+  {
+    path: 'createschedule',
+    component: CreatescheduleComponent
+  }
+  ,
+  {
+    path: 'perdiem',
+    component: PerdiemComponent
   }
 ];
- export const RoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);
+export const RoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);

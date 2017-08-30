@@ -119,6 +119,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
   @Output() onEventResizeStop: EventEmitter<any> = new EventEmitter();
 
   @Output() onEventResize: EventEmitter<any> = new EventEmitter();
+  @Output() onEventReceive: EventEmitter<any> = new EventEmitter();
 
   @Output() onViewRender: EventEmitter<any> = new EventEmitter();
 
@@ -161,6 +162,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
       eventLimit: this.eventLimit,
       defaultDate: this.defaultDate,
       editable: this.editable,
+      droppable: this.droppable,
       eventStartEditable: this.eventStartEditable,
       eventDurationEditable: this.eventDurationEditable,
       defaultView: this.defaultView,
@@ -232,7 +234,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
         });
       },
       eventDrop: (event, delta, revertFunc, jsEvent, ui, view) => {
-        this.updateEvent(event);
+        //this.updateEvent(event);
 
         this.onEventDrop.emit({
           'event': event,
@@ -257,7 +259,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
         });
       },
       eventResize: (event, delta, revertFunc, jsEvent, ui, view) => {
-        this.updateEvent(event);
+        //this.updateEvent(event);
 
         this.onEventResize.emit({
           'event': event,
@@ -267,6 +269,14 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
           'view': view
         });
       },
+      eventReceive: (event) => { //called when a proper external event is dropped
+        console.log('eventReceive', event);
+         this.onEventReceive.emit({
+          'event': event,
+          'view': {name:'test'}
+        });
+      },
+
       viewRender: (view, element) => {
         this.onViewRender.emit({
           'view': view,
@@ -292,9 +302,9 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
     if (this.schedule) {
       let options = {};
       for (let change in changes) {
-        if (change !== 'events') {
+       // if (change !== 'events') {
           options[change] = changes[change].currentValue;
-        }
+       // }
       }
 
       if (Object.keys(options).length) {
@@ -306,7 +316,7 @@ export class SchedulerComponent implements DoCheck, OnDestroy, OnInit, OnChanges
   initialize() {
     this.schedule = jQuery(this.el.nativeElement.children[0]);
     this.schedule.fullCalendar(this.config);
-    this.schedule.fullCalendar('addEventSource', this.events);
+    //this.schedule.fullCalendar('addEventSource', this.events);
     this.initialized = true;
   }
 

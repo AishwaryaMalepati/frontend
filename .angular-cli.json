@@ -27,6 +27,7 @@
         "styles.css"
       ],
       "scripts": ["../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jquery-ui/ui/jquery-1-7.js",
       "../node_modules/moment/min/moment.min.js",
       "../node_modules/fullcalendar/dist/fullcalendar.min.js",
       "../node_modules/fullcalendar-scheduler/dist/scheduler.min.js"],

@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
         if (result === true) {
           // login successful
+          localStorage.setItem('user', this.model.username);
           this.router.navigate(['/home']);
         } else {
           // login failed

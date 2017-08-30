@@ -1,25 +1,66 @@
-<app-navbar></app-navbar>
 <div id="wrapper">
-  <app-sidebar></app-sidebar>
-  <div id="main-wrapper" class="col-md-11 pull-right">
-    <div id="main">
-      <hr/>
-      <app-scheduler
-        editable="true"
-        defaultView="timelineDay"
-        [events]="events"
-        [resources]="resources"
-        [defaultDate]="defaultDate"
-        slotLabelFormat= "MMMM DD, HH:mm"
-        resourceAreaWidth="120"
-        titleFormat="YYYY-MM-DD dddd"
-        nowIndicator="true"
-        [header]="headerConfig"
-        [resourceColumns]="resourceCol"
-      ></app-scheduler>
+  <app-navbar></app-navbar>
+  <div class="row" style="margin:0;">
+
+    <div class="col-md-2">
+      <div id="external-events">
+        <h5>Draggable Events</h5>
+        <div class="fc-event" *ngFor="let loc of locations">{{loc.location_name}}</div>
+        <!--  <p>
+             <input type="checkbox" id="drop-remove">
+             <label for="drop-remove">remove after drop</label>
+         </p> -->
+      </div>
     </div>
+    <div id="main-wrapper" class="col-md-10">
+      <div id="main" class="allscheduler" *ngIf="events && resources">
 
-    <!--<app-footer></app-footer>-->
+        <app-scheduler
+          editable="true"
+          droppable="true"
+          defaultView="timelineMonth"
+          [events]="events"
+          [resources]="resources"
+          [defaultDate]="defaultDate"
+          slotLabelFormat= "DD MMM"
+          resourceAreaWidth="250"
+          titleFormat="YYYY-MM-DD dddd"
+          nowIndicator="true"
+          [header]="headerConfig"
+          [resourceColumns]="resourceCol"
+          (onEventDrop)="handleEventDrop($event)" (onDayClick)="handleDayClick($event)" (onEventResize)="handleEventDrop($event)" (onEventReceive)="handleEventDrop($event)" (onEventClick)="handleEventClick($event)"
+        ></app-scheduler>
+      </div>
+      <p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
+                [style]="{'overflow':'visible'}" [resizable]="false">
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vin">Title</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="title" readonly [(ngModel)]="event.location" /></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="start">Start</label></div>
+            <div class="ui-grid-col-8">
+              <p-calendar [(ngModel)]="event.start" dateFormat="yy-mm-dd" [showTime]="true"></p-calendar></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="end">End</label></div>
+            <div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.end" dateFormat="yy-mm-dd" [showTime]="true"></p-calendar></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="allday">All Day</label></div>
+            <div class="ui-grid-col-8"><p-checkbox [(ngModel)]="event.allDay" binary="checkbox"></p-checkbox></div>
+          </div>
+        </div>
+        <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="deleteEvent()" label="Delete" [disabled]="!event?.id"></button>
+            <button type="button" pButton icon="fa-check" (click)="saveEvent(true)" label="Save" [disabled]="!event?.start"></button>
+          </div>
+        </p-footer>
+      </p-dialog>
+      <!--<app-footer></app-footer>-->
 
+    </div>
   </div>
 </div>

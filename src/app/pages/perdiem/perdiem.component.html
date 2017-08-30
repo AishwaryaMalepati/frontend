@@ -1,0 +1,33 @@
+<div id="wrapper">
+  <app-navbar></app-navbar>
+  <div style="margin: 70px auto;">
+    <p-dataTable [value]="perdiemList" scrollable="true" scrollHeight="500px"
+                 frozenWidth="300px" unfrozenWidth="1000px" [style]="{'margin-top':'30px'}">
+      <p-header>Days on Track and Per Diem</p-header>
+      <p-column field="first_name" header="First Name" [style]="{'width':'150px'}" frozen="true"></p-column>
+      <p-column field="last_name" header="Last Name" [style]="{'width':'150px'}" frozen="true"></p-column>
+      <p-column field="days_jantomar" header="Days (Jan - Mar)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="jantomar" header="Per Diem (Jan - Mar) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_martoapr" header="Days (Mar - Apr)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="martoapr" header="Per Diem (Mar - Apr) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_aprtomay" header="Days (Apr - May)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="aprtomay" header="Per Diem (Apr - May) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_maytojun" header="Days (May - Jun)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="maytojun" header="Per Diem (May - Jun) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_juntojul" header="Days (Jun - Jul)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="juntojul" header="Per Diem (Jun - Jul) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_jultoaug" header="Days (Jul - Aug)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="jultoaug" header="Per Diem (Jul - Aug) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_augtosep" header="Days (Aug - Sep)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="augtosep" header="Per Diem (Aug - Sep) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_septooct" header="Days (Sep - Oct)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="septooct" header="Per Diem (Sep - Oct) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="days_octtonov" header="Days (Oct - Nov)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="octtonov" header="Per Diem (Oct - Nov) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="employee_id" header="ID" [style]="{'width':'150px'}"></p-column>
+    </p-dataTable>
+  </div>
+
+  <!--<app-footer></app-footer>-->
+
+</div>
