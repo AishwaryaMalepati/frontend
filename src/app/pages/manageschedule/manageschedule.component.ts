@@ -1,31 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import {RouterLink} from "@angular/router";
 import {EventService} from '../../services/event.service';
-import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-createschedule',
-  templateUrl: './createschedule.component.html',
-  styleUrls: ['./createschedule.component.css']
+  selector: 'app-manageschedule',
+  templateUrl: './manageschedule.component.html',
+  // styleUrls: ['./manageschedule.component.css']
 })
-export class CreatescheduleComponent implements OnInit {
+export class ManagescheduleComponent implements OnInit {
+  actions: any[]=[];
   groups: any[]=[];
   employeesBack: any[]=[];
   employees: any[]=[];
+  ddlEmployees: any[]=[];
   locations: any[] = [];
   selectedGroups: any[] = [];
-  overlapMsg: string='';
   errorMessage: string;
+  formDate: any;
+  toDate: any;
   myScedule: MyScedule;
   event: MyEvent;
+  selectedEmp1: number;
+  selectedEmp2: number;
   dialogVisible: boolean = false;
   successDialogVisible: boolean = false;
   curEventIndex: number;
 
-  public constructor(private eventService: EventService, private router: Router) { }
+  constructor(private eventService:EventService) {
+
+  }
 
   ngOnInit() {
     this.myScedule = new MyScedule();
     this.loadEvents();
+    this.actions = [
+      {label:'Select', value:0},
+      {label:'Swap', value:1},
+      {label:'Clear', value:2}
+    ];
+
   }
 
   loadEvents(){
@@ -50,6 +63,7 @@ export class CreatescheduleComponent implements OnInit {
             return emp;
           });
           this.employeesBack = employees;
+          this.ddlEmployees = employees;
         },
         error => this.errorMessage = <any>error);
 
@@ -98,25 +112,18 @@ export class CreatescheduleComponent implements OnInit {
         evnts.push(Object.assign({employee: emp}, evt));
       });
     });
-    this.eventService.saveEvent({events: evnts}, 'createschedule')
+    this.eventService.saveEvent({events: evnts}, 'employeelocations')
       .subscribe(res => {
           //this.router.navigate(['/allschedules']);
-          let temp = res.filter(item => item.warning_message === 'overlaps');
-          if(temp.length){
-            this.overlapMsg = 'Events overlapped';
-          }
           this.successDialogVisible = true;
         },
         error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
   }
   closeDialog() {
     this.myScedule = new MyScedule();
-    this.overlapMsg = '';
     this.successDialogVisible = false;
-
   }
 }
-
 
 export class MyScedule {
   id: number;

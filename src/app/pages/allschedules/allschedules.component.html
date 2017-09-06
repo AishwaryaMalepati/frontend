@@ -5,7 +5,7 @@
     <div class="col-md-2">
       <div id="external-events">
         <h5>Draggable Events</h5>
-        <div class="fc-event" *ngFor="let loc of locations">{{loc.location_name}}</div>
+        <div class="fc-event" *ngFor="let loc of locations" [ngStyle]="{'background-color': loc.location_color}">{{loc.location_name}}</div>
         <!--  <p>
              <input type="checkbox" id="drop-remove">
              <label for="drop-remove">remove after drop</label>
@@ -49,7 +49,7 @@
           </div>
           <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="allday">All Day</label></div>
-            <div class="ui-grid-col-8"><p-checkbox [(ngModel)]="event.allDay" binary="checkbox"></p-checkbox></div>
+            <div class="ui-grid-col-8"><p-checkbox  binary="checkbox"></p-checkbox></div>
           </div>
         </div>
         <p-footer>

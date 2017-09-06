@@ -24,7 +24,7 @@ import 'moment';
 import 'fullcalendar';
 
 // primeng components
-import {PanelModule, ScheduleModule, DialogModule, CalendarModule} from 'primeng/primeng';
+import {PanelModule, ScheduleModule, DialogModule, CalendarModule,DropdownModule} from 'primeng/primeng';
 import {InputTextModule, CheckboxModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
@@ -41,6 +41,7 @@ import { FooterComponent } from './base_components/footer/footer.component';
 import { AllschedulesComponent } from './pages/allschedules/allschedules.component';
 import { PerdiemComponent } from './pages/perdiem/perdiem.component';
 import { NascarcalendarComponent } from './base_components/nascarcalendar/nascarcalendar.component';
+import { ManagescheduleComponent } from './pages/manageschedule/manageschedule.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { NascarcalendarComponent } from './base_components/nascarcalendar/nascar
     AllschedulesComponent,
     CreatescheduleComponent,
     PerdiemComponent,
-    NascarcalendarComponent
+    NascarcalendarComponent,
+    ManagescheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { NascarcalendarComponent } from './base_components/nascarcalendar/nascar
     MenubarModule,
     MultiSelectModule,
     DataTableModule,
-    SharedModule
+    SharedModule,
+    DropdownModule
   ],
 //  providers: [AuthService],
   providers: [

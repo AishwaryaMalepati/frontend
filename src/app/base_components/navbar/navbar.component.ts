@@ -24,7 +24,8 @@ export class NavbarComponent implements OnInit {
                   routerLink: ['/allschedules']
                 },
                 {label: 'My Schedule', routerLink: ['/myschedule']},
-          {label: 'Create Schedule', routerLink: ['/createschedule']}
+          {label: 'Create Schedule', routerLink: ['/createschedule']},
+          {label: 'Manage Schedule', routerLink: ['/manageschedule']}
         ]
       },
       {

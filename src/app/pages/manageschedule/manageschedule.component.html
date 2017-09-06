@@ -1,0 +1,165 @@
+<div id="wrapper">
+  <app-navbar></app-navbar>
+
+  <div  style="margin: 70px auto;width:50%">
+    <h1>Manage Schedule</h1>
+    <br>
+    <form (ngSubmit)="saveSchedule()" #mySceduleForm="ngForm">
+      <div class="form-group" >
+        <label for="actions">Choose Action: </label>
+        <p-dropdown id="actions" [style]="{'width':'100%'}" [options]="actions" [(ngModel)]="selectedAction" name="actions">
+        </p-dropdown>
+      </div>
+      <div *ngIf="selectedAction == 1">
+        <div class="form-group" >
+          <label for="selectedEmp1">Select Employee 1</label>
+          <p-dropdown id="selectedEmp1" [style]="{'width':'100%'}" [options]="ddlEmployees" [(ngModel)]="selectedEmp1" name="selectedEmp1">
+          </p-dropdown>
+        </div>
+
+        <div class="form-group">
+          <label for="selectedEmp2">Select Employee 2</label>
+          <p-dropdown id="selectedEmp2" [style]="{'width':'100%'}" [options]="ddlEmployees" [(ngModel)]="selectedEmp2" name="selectedEmp2">
+          </p-dropdown>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12" style="font-weight: bold;">
+            <label for="groups">Date From</label>
+          </div>
+          <div class="col-md-12">
+            <p-calendar [(ngModel)]="fromDate" [style]="{'width':'100%'}" dateFormat="yy-mm-dd" name="fromDate"></p-calendar>
+          </div>
+
+          <div class="col-md-12" style="font-weight: bold;">
+            <label for="groups">Date To</label>
+          </div>
+          <div class="col-md-12">
+            <p-calendar [(ngModel)]="toDate" [style]="{'width':'100%'}" dateFormat="yy-mm-dd" name="toDate"></p-calendar>
+          </div>
+        </div>
+
+
+        <!--  <div class="row">
+           <div class="col-md-6" style="font-weight: bold;">
+             Events
+           </div>
+           <div class="col-md-6 text-right">
+
+           </div>
+         </div> -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table" *ngIf="myScedule.events.length">
+                <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let event of myScedule.events; index as i">
+                  <td>{{event.location}}</td>
+                  <td>{{event.start | date:'medium' }}</td>
+                  <td>{{event.end | date:'medium' }}</td>
+                  <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i)"></button></td>
+                  <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i)"></button></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-success" [disabled]="!mySceduleForm.form.valid">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="selectedAction == 2">
+
+      <form (ngSubmit)="saveSchedule()" #mySceduleForm="ngForm">
+        <div class="form-group" >
+          <label for="groups">Select Group:</label>
+          <p-multiSelect [id]="'groups'" [name]="'groups'" [options]="groups" [(ngModel)]="selectedGroups" (onChange)="filterEmployees($event)">
+            <div [hidden]="groups.valid || groups.pristine" class="alert alert-danger">
+              Group is required
+            </div>
+          </p-multiSelect>
+        </div>
+
+        <div class="form-group">
+          <label for="employees">Select Employee:</label>
+          <p-multiSelect [id]="'employees'" [name]="'employees'" [options]="employees" [(ngModel)]="myScedule.employees">
+            <div [hidden]="employees.valid || employees.pristine" class="alert alert-danger">
+              Employee  is required
+            </div>
+          </p-multiSelect>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="font-weight: bold;">
+            <label for="groups">Date From</label>
+          </div>
+          <div class="col-md-12">
+            <p-calendar [(ngModel)]="fromDate" [style]="{'width':'100%'}" dateFormat="yy-mm-dd" name="fromDate"></p-calendar>
+          </div>
+          <div class="col-md-12" style="font-weight: bold;">
+            <label for="groups">Date To</label>
+          </div>
+          <div class="col-md-12">
+            <p-calendar [(ngModel)]="toDate" [style]="{'width':'100%'}" dateFormat="yy-mm-dd" name="toDate"></p-calendar>
+          </div>
+        </div>
+        <!--  <div class="row">
+           <div class="col-md-6" style="font-weight: bold;">
+             Events
+           </div>
+           <div class="col-md-6 text-right">
+
+           </div>
+         </div> -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table" *ngIf="myScedule.events.length">
+                <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let event of myScedule.events; index as i">
+                  <td>{{event.location}}</td>
+                  <td>{{event.start | date:'medium' }}</td>
+                  <td>{{event.end | date:'medium' }}</td>
+                  <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i)"></button></td>
+                  <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i)"></button></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-success" [disabled]="!mySceduleForm.form.valid">Save</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+
+

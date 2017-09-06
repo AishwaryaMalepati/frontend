@@ -9,6 +9,7 @@ import { CreatescheduleComponent } from './pages/createschedule/createschedule.c
 import { HomeComponent } from './pages/home/home.component';
 import { AllschedulesComponent } from './pages/allschedules/allschedules.component';
 import { PerdiemComponent } from './pages/perdiem/perdiem.component';
+import {ManagescheduleComponent} from './pages/manageschedule/manageschedule.component';
 import { AuthGuard } from './guards/index';
 export const routes: Routes = [
   {
@@ -41,6 +42,11 @@ export const routes: Routes = [
   {
     path: 'perdiem',
     component: PerdiemComponent
+  }
+  ,
+  {
+    path: 'manageschedule',
+    component: ManagescheduleComponent
   }
 ];
 export const RoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);

@@ -54,11 +54,11 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     Observable.forkJoin([this.eventService.getList('employees'),this.eventService.getList('employeelocations')])
       .subscribe((response) => {
         let employees = response[0];
-        this.resources = response[0];//.filter((emp) => emp.group != null );
+        this.resources = response[0].map((emp)=>{emp.name = emp.first_name + ' ' + emp.last_name; return emp;});
         var evnts = [];
 
         this.events = response[1].map((loc)=>{loc.title = loc.location;loc.resourceId = loc.employee; return loc;});
-        this.eventsBack = response[1].map((loc)=>{loc.title = loc.location;loc.resourceId = loc.employee; return loc;});
+        this.eventsBack = response[1].map((loc)=>{loc.title = loc.location;loc.resourceId = loc.employee;loc.backgroundColor = loc.location_color; return loc;});
         console.log(this.events);
         this.resourceCol = [ {
           group: true,
@@ -67,7 +67,7 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
         },
           {
             labelText: 'Employee',
-            field: 'first_name'
+            field: 'name'
           }];
         console.log('testing1');
         this.bindEvents();
@@ -78,6 +78,7 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     jQuery('#external-events .fc-event').each(function() {
       jQuery(this).data('event', {
         title: jQuery.trim(jQuery(this).text()),
+        backgroundColor: jQuery(this).css('background-color'),
         stick: true
       });
     });
@@ -119,7 +120,10 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     this.event.employee = event.resourceId;
     //this.event.start = new Date(start._i.replace('T',' ').replace('Z',''));
     this.event.start = new Date(start.format().replace('T',' ').replace('Z',''));
-    this.event.allDay = event.allDay;
+    //this.event.allDay = event.allDay;
+    if(!this.event.end) {
+      this.event.end = this.event.start;
+    }
 
     if(isShowDialog){
       this.dialogVisible = true;
@@ -140,6 +144,8 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
               if(isEdit){
                 this.eventsBack[index].end = event.end;
                 this.eventsBack[index].start = event.start;
+                //this.eventsBack[index].backgroundColor = event.location_color;
+                //this.eventsBack[index].location_color = event.location_color;
                 this.events = this.eventsBack;
                 console.log(this.events);
                 this.dialogVisible = false;
@@ -152,6 +158,7 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
       this.eventService.saveEvent(this.event, 'employeelocations')
         .subscribe(event => {
             event.title = event.location;event.resourceId = event.employee;
+            event.backgroundColor = event.location_color;
             this.events.push(event);
             this.event = null;
             console.log(this.events);
@@ -160,8 +167,6 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
           error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
 
     }
-
-
   }
 
   deleteEvent() {
@@ -192,5 +197,5 @@ export class MyEvent {
   start: any;
   end: any;
   employee: number;
-  allDay: boolean = true;
+  //allDay: boolean = true;
 }

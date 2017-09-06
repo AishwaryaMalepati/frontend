@@ -3,18 +3,13 @@
   <div  style="margin: 70px auto;width:50%">
     <h1>Event Creation</h1>
     <form (ngSubmit)="saveSchedule()" #mySceduleForm="ngForm">
-      <div class="form-group">
-        <label for="group">Select Group</label>
-        <select class="form-control" id="group"
-                required
-                [(ngModel)]="myScedule.group" name="group"
-                (change)="filterEmployees()"
-                #group="ngModel">
-          <option *ngFor="let group of groups" [value]="group.group_name">{{group.group_name}}</option>
-        </select>
-        <div [hidden]="group.valid || group.pristine" class="alert alert-danger">
-          Group is required
-        </div>
+      <div class="form-group" >
+        <label for="groups">Select Group</label>
+        <p-multiSelect [id]="'groups'" [name]="'groups'" [options]="groups" [(ngModel)]="selectedGroups" (onChange)="filterEmployees($event)">
+          <div [hidden]="groups.valid || groups.pristine" class="alert alert-danger">
+            Group is required
+          </div>
+        </p-multiSelect>
       </div>
 
       <div class="form-group">
@@ -67,16 +62,6 @@
       </div>
     </form>
 
-    <p-dialog header="Schedule Creation" [(visible)]="successDialogVisible" [responsive]="true" showEffect="fade" [modal]="true" [contentStyle]="{'overflow':'visible'}"
-              [style]="{'overflow':'visible'}" [resizable]="false">
-      <div> Schedule saved successfully</div>
-
-      <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa-close" (click)="closeDialog()" label="Okay"></button>
-        </div>
-      </p-footer>
-    </p-dialog>
 
     <p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
               [style]="{'overflow':'visible'}" [resizable]="false">
@@ -115,6 +100,17 @@
       </p-footer>
     </p-dialog>
 
+    <p-dialog header="Schedule Creation" [(visible)]="successDialogVisible" [responsive]="true" showEffect="fade" [modal]="true" [contentStyle]="{'overflow':'visible'}"
+              [style]="{'overflow':'visible'}" [resizable]="false">
+      <div> {{overlapMsg}}</div>
+      <div> Schedule saved successfully</div>
+
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa-close" (click)="closeDialog()" label="Okay"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
     <!--<app-footer></app-footer>-->
 
   </div>

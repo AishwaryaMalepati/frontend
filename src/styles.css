@@ -138,3 +138,7 @@ background: #eee;
 .ui-datatable {
   margin: 30px auto !important;
 }
+
+.ui-inputtext{
+  width: 100%;
+}
