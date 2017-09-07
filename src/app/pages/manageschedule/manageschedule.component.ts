@@ -36,7 +36,8 @@ export class ManagescheduleComponent implements OnInit {
     this.actions = [
       {label:'Select', value:0},
       {label:'Swap', value:1},
-      {label:'Clear', value:2}
+      {label:'Clear', value:2},
+      {label:'Copy', value:3}
     ];
 
   }

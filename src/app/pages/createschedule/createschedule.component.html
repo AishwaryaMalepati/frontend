@@ -102,8 +102,28 @@
 
     <p-dialog header="Schedule Creation" [(visible)]="successDialogVisible" [responsive]="true" showEffect="fade" [modal]="true" [contentStyle]="{'overflow':'visible'}"
               [style]="{'overflow':'visible'}" [resizable]="false">
-      <div> {{overlapMsg}}</div>
       <div> Schedule saved successfully</div>
+      <div class="table-responsive" *ngIf="overlapEvents.length" style="max-height:400; overflow:auto">
+        <div>Overlapped Events</div>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Title</th>
+            <th>Start</th>
+            <th>End</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let event of overlapEvents">
+            <td>{{event.empName}}</td>
+            <td>{{event.location}}</td>
+            <td>{{event.start | date:'medium' }}</td>
+            <td>{{event.end | date:'medium' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">

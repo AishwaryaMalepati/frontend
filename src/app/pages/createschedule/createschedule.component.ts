@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class CreatescheduleComponent implements OnInit {
   groups: any[]=[];
   employeesBack: any[]=[];
+  overlapEvents: any[]=[];
   employees: any[]=[];
   locations: any[] = [];
   selectedGroups: any[] = [];
@@ -55,7 +56,6 @@ export class CreatescheduleComponent implements OnInit {
 
   }
   filterEmployees(evt) {
-    console.log(evt.value);
     this.employees = this.employeesBack.filter( (emp) => evt.value.indexOf(emp.group)>= 0 );
   }
   changeLoc() {
@@ -101,17 +101,22 @@ export class CreatescheduleComponent implements OnInit {
     this.eventService.saveEvent({events: evnts}, 'createschedule')
       .subscribe(res => {
           //this.router.navigate(['/allschedules']);
-          let temp = res.filter(item => item.warning_message === 'overlaps');
-          if(temp.length){
-            this.overlapMsg = 'Events overlapped';
-          }
+          this.overlapEvents = res.filter(item => {
+            if(item.warning_message === 'overlaps'){
+              var emps = this.employees.filter(emp=>emp.id == item.employee);
+              item.empName = emps[0].first_name+' '+emps[0].last_name;
+              return item;
+            }
+          });
+
           this.successDialogVisible = true;
         },
         error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
   }
   closeDialog() {
     this.myScedule = new MyScedule();
-    this.overlapMsg = '';
+    this.overlapEvents = [];
+    this.selectedGroups = [];
     this.successDialogVisible = false;
 
   }
