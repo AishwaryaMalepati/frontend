@@ -10,7 +10,7 @@
         <p-dropdown id="actions" [style]="{'width':'100%'}" [options]="actions" [(ngModel)]="selectedAction" name="actions">
         </p-dropdown>
       </div>
-      <div *ngIf="selectedAction == 1">
+      <div *ngIf="selectedAction == 1 || selectedAction == 3">
         <div class="form-group" >
           <label for="selectedEmp1">Select Employee 1</label>
           <p-dropdown id="selectedEmp1" [style]="{'width':'100%'}" [options]="ddlEmployees" [(ngModel)]="selectedEmp1" name="selectedEmp1">
@@ -39,41 +39,6 @@
           </div>
         </div>
 
-
-        <!--  <div class="row">
-           <div class="col-md-6" style="font-weight: bold;">
-             Events
-           </div>
-           <div class="col-md-6 text-right">
-
-           </div>
-         </div> -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="table-responsive">
-              <table class="table" *ngIf="myScedule.events.length">
-                <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let event of myScedule.events; index as i">
-                  <td>{{event.location}}</td>
-                  <td>{{event.start | date:'medium' }}</td>
-                  <td>{{event.end | date:'medium' }}</td>
-                  <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i)"></button></td>
-                  <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i)"></button></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
         <div class="row">
           <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-success" [disabled]="!mySceduleForm.form.valid">Save</button>
@@ -95,7 +60,7 @@
 
         <div class="form-group">
           <label for="employees">Select Employee:</label>
-          <p-multiSelect [id]="'employees'" [name]="'employees'" [options]="employees" [(ngModel)]="myScedule.employees">
+          <p-multiSelect [id]="'employees'" [name]="'employees'" [options]="employees" [(ngModel)]="selectedEmployees">
             <div [hidden]="employees.valid || employees.pristine" class="alert alert-danger">
               Employee  is required
             </div>
@@ -115,40 +80,7 @@
             <p-calendar [(ngModel)]="toDate" [style]="{'width':'100%'}" dateFormat="yy-mm-dd" name="toDate"></p-calendar>
           </div>
         </div>
-        <!--  <div class="row">
-           <div class="col-md-6" style="font-weight: bold;">
-             Events
-           </div>
-           <div class="col-md-6 text-right">
 
-           </div>
-         </div> -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="table-responsive">
-              <table class="table" *ngIf="myScedule.events.length">
-                <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let event of myScedule.events; index as i">
-                  <td>{{event.location}}</td>
-                  <td>{{event.start | date:'medium' }}</td>
-                  <td>{{event.end | date:'medium' }}</td>
-                  <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i)"></button></td>
-                  <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i)"></button></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
         <div class="row">
           <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-success" [disabled]="!mySceduleForm.form.valid">Save</button>
@@ -158,7 +90,16 @@
 
     </div>
   </div>
+  <p-dialog header="Schedule Creation" [(visible)]="successDialogVisible" [responsive]="true" showEffect="fade" [modal]="true" [contentStyle]="{'overflow':'visible'}"
+            [style]="{'overflow':'visible'}" [resizable]="false">
+    <div> Schedule saved successfully</div>
 
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa-close" (click)="closeDialog()" label="Okay"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
 </div>
 
 

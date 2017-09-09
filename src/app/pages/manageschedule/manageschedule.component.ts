@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {EventService} from '../../services/event.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-manageschedule',
@@ -13,31 +14,28 @@ export class ManagescheduleComponent implements OnInit {
   employeesBack: any[]=[];
   employees: any[]=[];
   ddlEmployees: any[]=[];
+  selectedEmployees: any[]=[];
   locations: any[] = [];
   selectedGroups: any[] = [];
   errorMessage: string;
-  formDate: any;
+  fromDate: any;
   toDate: any;
-  myScedule: MyScedule;
-  event: MyEvent;
   selectedEmp1: number;
   selectedEmp2: number;
-  dialogVisible: boolean = false;
   successDialogVisible: boolean = false;
-  curEventIndex: number;
+  selectedAction: number;
 
   constructor(private eventService:EventService) {
 
   }
 
   ngOnInit() {
-    this.myScedule = new MyScedule();
     this.loadEvents();
     this.actions = [
       {label:'Select', value:0},
       {label:'Swap', value:1},
-      {label:'Clear', value:2},
-      {label:'Copy', value:3}
+      {label:'Copy', value:3},
+      {label:'Clear', value:2}
     ];
 
   }
@@ -73,69 +71,31 @@ export class ManagescheduleComponent implements OnInit {
     console.log(evt.value);
     this.employees = this.employeesBack.filter( (emp) => evt.value.indexOf(emp.group)>= 0 );
   }
-  changeLoc() {
-    this.locations.map( (loc) => {
-      if(loc.id == this.event.id){
-        this.event.location = loc.location_name;
-      }
-    });
-  }
-  cancelEvent() {
-    this.dialogVisible = false;
-  }
-  createNew() {
-    this.curEventIndex = -1;
-    this.event = new MyEvent();
-    this.dialogVisible = true;
-  }
-  saveEvent() {
-    if(this.curEventIndex >= 0){
-      this.myScedule.events[this.curEventIndex] = this.event;
-      this.curEventIndex = -1;
-    } else {
-      this.myScedule.events.push(this.event);
-    }
-    this.dialogVisible = false;
-  }
-  editEvent(index) {
-    this.curEventIndex = index;
-    this.event = Object.assign({}, this.myScedule.events[index]);
-    this.dialogVisible = true;
-  }
-  deleteEvent(index) {
-    this.myScedule.events.splice(index, 1);
-  }
+
   saveSchedule() {
-    let evnts = [];
-    this.myScedule.employees.map( (emp) => {
-      this.myScedule.events.map( (evt) => {
-        //evt.employee = emp;
-        evnts.push(Object.assign({employee: emp}, evt));
-      });
-    });
-    this.eventService.saveEvent({events: evnts}, 'employeelocations')
-      .subscribe(res => {
-          //this.router.navigate(['/allschedules']);
-          this.successDialogVisible = true;
-        },
-        error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
+
+    if (this.selectedAction !== 2) {
+      const reqObj = {emp1: this.selectedEmp1, emp2: this.selectedEmp2, start: this.convertDate(this.fromDate), end: this.convertDate(this.toDate)};
+      const url = this.selectedAction === 3 ? 'createschedule/copy' : 'createschedule/swap';
+      this.eventService.saveEvent(reqObj, url)
+        .subscribe(res => {
+            this.successDialogVisible = true;
+          },
+          error => {this.errorMessage = <any>error;  this.successDialogVisible = false; });
+    } else {
+    }
+  }
+  convertDate(date) {
+    return moment(date).format('YYYY-MM-DD');
+
   }
   closeDialog() {
-    this.myScedule = new MyScedule();
+    this.selectedGroups = [];
+    this.fromDate = null;
+    this.toDate = null;
+    this.selectedEmp1 = -1;
+    this.selectedEmp2 = -1;
+    this.selectedAction = 0;
     this.successDialogVisible = false;
   }
-}
-
-export class MyScedule {
-  id: number;
-  employees: any;
-  events:any = [];
-}
-export class MyEvent {
-  id: number;
-  location: string;
-  start: any;
-  end: any;
-  employee: number;
-  // allDay: boolean = true;
 }
