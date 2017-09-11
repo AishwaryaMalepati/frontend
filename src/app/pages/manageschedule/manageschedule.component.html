@@ -4,7 +4,7 @@
   <div  style="margin: 70px auto;width:50%">
     <h1>Manage Schedule</h1>
     <br>
-    <form (ngSubmit)="saveSchedule()" #mySceduleForm="ngForm">
+    <form (ngSubmit)="updateEvents()" #mySceduleForm="ngForm">
       <div class="form-group" >
         <label for="actions">Choose Action: </label>
         <p-dropdown id="actions" [style]="{'width':'100%'}" [options]="actions" [(ngModel)]="selectedAction" name="actions">
@@ -48,7 +48,7 @@
     </form>
     <div *ngIf="selectedAction == 2">
 
-      <form (ngSubmit)="saveSchedule()" #mySceduleForm="ngForm">
+      <form (ngSubmit)="updateEvents()" #mySceduleForm="ngForm">
         <div class="form-group" >
           <label for="groups">Select Group:</label>
           <p-multiSelect [id]="'groups'" [name]="'groups'" [options]="groups" [(ngModel)]="selectedGroups" (onChange)="filterEmployees($event)">
@@ -101,6 +101,3 @@
     </p-footer>
   </p-dialog>
 </div>
-
-
-

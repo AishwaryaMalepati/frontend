@@ -54,6 +54,15 @@ export class EventService {
       .catch(this.handleError);
   }
 
+  deleteEventinRange(url): Observable<any> {
+    let headers = new Headers({ 'Authorization': 'JWT ' + this.authenticationService.token });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.delete(`${this.baseUrl}${url}`, options)
+      .map((response: Response) => <any[]> response.json())
+      //.do(data => console.log('All: ' +  JSON.stringify(data)))
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

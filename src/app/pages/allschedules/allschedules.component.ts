@@ -51,14 +51,15 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     }
   }
   loadEmps() {
-    Observable.forkJoin([this.eventService.getList('employees'),this.eventService.getList('employeelocations')])
+    Observable.forkJoin([this.eventService.getList('employees'), this.eventService.getList('employeelocations')])
       .subscribe((response) => {
         let employees = response[0];
-        this.resources = response[0].map((emp)=>{emp.name = emp.first_name + ' ' + emp.last_name; return emp;});
+        this.resources = response[0].map((emp) => {emp.name = emp.first_name + ' ' + emp.last_name; return emp; });
         var evnts = [];
 
-        this.events = response[1].map((loc)=>{loc.title = loc.location;loc.resourceId = loc.employee; return loc;});
-        this.eventsBack = response[1].map((loc)=>{loc.title = loc.location;loc.resourceId = loc.employee;loc.backgroundColor = loc.location_color; return loc;});
+        this.events = response[1].map((loc) => {loc.title = loc.location; loc.resourceId = loc.employee; return loc; });
+        this.eventsBack = response[1].map((loc) => {loc.title = loc.location; loc.resourceId = loc.employee;
+        loc.backgroundColor = loc.location_color; return loc; });
         console.log(this.events);
         this.resourceCol = [ {
           group: true,
@@ -101,7 +102,7 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     this.handleEvent(e.event,e.view.name, false);
   }
 
-  handleEvent(event,view, isShowDialog){
+  handleEvent(event, view, isShowDialog){
     this.event = new MyEvent();
     this.event.location = event.title;
 
@@ -109,23 +110,23 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
     let end = event.end;
 
 
-    if(end) {
+    if (end) {
       // end.stripTime();
-      //this.event.end = new Date(end._i.replace('T',' ').replace('Z',''));
+      // this.event.end = new Date(end._i.replace('T',' ').replace('Z',''));
       this.event.end = new Date(end.format().replace('T',' ').replace('Z',''));
     }
-    if(event.id){
+    if (event.id) {
       this.event.id = event.id;
     }
     this.event.employee = event.resourceId;
-    //this.event.start = new Date(start._i.replace('T',' ').replace('Z',''));
+    // this.event.start = new Date(start._i.replace('T',' ').replace('Z',''));
     this.event.start = new Date(start.format().replace('T',' ').replace('Z',''));
-    //this.event.allDay = event.allDay;
-    if(!this.event.end) {
+    // this.event.allDay = event.allDay;
+    if (!this.event.end) {
       this.event.end = this.event.start;
     }
 
-    if(isShowDialog){
+    if (isShowDialog) {
       this.dialogVisible = true;
     } else {
       this.saveEvent(false)
@@ -133,19 +134,19 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
   }
 
   saveEvent(isEdit) {
-    if(this.event.id) {
+    if (this.event.id) {
       let index: number = this.findEventIndexById(this.event.id);
-      if(index >= 0) {
-        if(isEdit){
+      if (index >= 0) {
+        if (isEdit) {
           this.events = [];
         }
         this.eventService.updateEvent(this.event, 'employeelocations')
           .subscribe(event => {
-              if(isEdit){
+              if (isEdit) {
                 this.eventsBack[index].end = event.end;
                 this.eventsBack[index].start = event.start;
-                //this.eventsBack[index].backgroundColor = event.location_color;
-                //this.eventsBack[index].location_color = event.location_color;
+                // this.eventsBack[index].backgroundColor = event.location_color;
+                // this.eventsBack[index].location_color = event.location_color;
                 this.events = this.eventsBack;
                 console.log(this.events);
                 this.dialogVisible = false;
@@ -171,7 +172,7 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
 
   deleteEvent() {
     let index: number = this.findEventIndexById(this.event.id);
-    if(index >= 0) {
+    if (index >= 0) {
       this.eventService.deleteEvent(this.event.id, 'employeelocations')
         .subscribe(events => {this.events.splice(index, 1); this.dialogVisible = false;},
           error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
@@ -180,8 +181,8 @@ export class AllschedulesComponent implements OnInit, AfterViewChecked {
 
   findEventIndexById(id: number) {
     let index = -1;
-    for(let i = 0; i < this.events.length; i++) {
-      if(id == this.events[i].id) {
+    for (let i = 0; i < this.events.length; i++) {
+      if (id == this.events[i].id) {
         index = i;
         break;
       }
@@ -197,5 +198,5 @@ export class MyEvent {
   start: any;
   end: any;
   employee: number;
-  //allDay: boolean = true;
+  // allDay: boolean = true;
 }

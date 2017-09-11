@@ -95,7 +95,7 @@ export class MyscheduleComponent implements OnInit {
 
   deleteEvent() {
     let index: number = this.findEventIndexById(this.event.id);
-    if(index >= 0) {
+    if (index >= 0) {
       this.eventService.deleteEvent(this.event.id, 'events')
         .subscribe(events => {this.events.splice(index, 1); this.dialogVisible = false;},
           error => {this.errorMessage = <any>error;  this.dialogVisible = false;});

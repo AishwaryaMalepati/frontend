@@ -40,6 +40,7 @@ export class ManagescheduleComponent implements OnInit {
 
   }
 
+// loading groups, locations and Employes
   loadEvents(){
     this.eventService.getList('groups')
       .subscribe(groups => {
@@ -67,25 +68,37 @@ export class ManagescheduleComponent implements OnInit {
         error => this.errorMessage = <any>error);
 
   }
+
+  //filter employees based on groups
   filterEmployees(evt) {
     console.log(evt.value);
     this.employees = this.employeesBack.filter( (emp) => evt.value.indexOf(emp.group)>= 0 );
   }
 
-  saveSchedule() {
-
-    if (this.selectedAction !== 2) {
+  //update events for swap, copy and clear
+  updateEvents() {
+    if(this.selectedAction != 2){
       const reqObj = {emp1: this.selectedEmp1, emp2: this.selectedEmp2, start: this.convertDate(this.fromDate), end: this.convertDate(this.toDate)};
-      const url = this.selectedAction === 3 ? 'createschedule/copy' : 'createschedule/swap';
+      const url = this.selectedAction === 3? 'createschedule/copy': 'createschedule/swap';
       this.eventService.saveEvent(reqObj, url)
         .subscribe(res => {
             this.successDialogVisible = true;
           },
-          error => {this.errorMessage = <any>error;  this.successDialogVisible = false; });
+          error => {this.errorMessage = <any>error;  this.successDialogVisible = false;});
     } else {
+
+      var url = `createschedule/delete_in_range/?emp_ids=${this.selectedEmployees}&ip_start=${this.convertDate(this.fromDate)}&ip_end=${this.convertDate(this.toDate)}`
+
+      this.eventService.deleteEventinRange(url)
+        .subscribe(res => {
+            this.successDialogVisible = true;
+          },
+          error => {this.errorMessage = <any>error;  this.successDialogVisible = false;});
     }
   }
-  convertDate(date) {
+
+  // for converting date format to YYYY-MM-DD
+  convertDate(date){
     return moment(date).format('YYYY-MM-DD');
 
   }
