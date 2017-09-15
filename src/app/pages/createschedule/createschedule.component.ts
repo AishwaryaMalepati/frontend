@@ -19,6 +19,7 @@ export class CreatescheduleComponent implements OnInit {
   myScedule: MyScedule;
   event: MyEvent;
   dialogVisible: boolean = false;
+  isOverlap: boolean = false;
   successDialogVisible: boolean = false;
   curEventIndex: number;
 
@@ -53,7 +54,6 @@ export class CreatescheduleComponent implements OnInit {
           this.employeesBack = employees;
         },
         error => this.errorMessage = <any>error);
-
   }
   filterEmployees(evt) {
     this.employees = this.employeesBack.filter( (emp) => evt.value.indexOf(emp.group)>= 0 );
@@ -67,6 +67,7 @@ export class CreatescheduleComponent implements OnInit {
   }
   cancelEvent() {
     this.dialogVisible = false;
+    this.isOverlap = false;
   }
   createNew() {
     this.curEventIndex = -1;
@@ -75,20 +76,49 @@ export class CreatescheduleComponent implements OnInit {
   }
   saveEvent() {
     if(this.curEventIndex >= 0){
-      this.myScedule.events[this.curEventIndex] = this.event;
+      if (!this.isOverlap) {
+        this.myScedule.events[this.curEventIndex] = this.event;
+      } else {
+        this.overlapEvents[this.curEventIndex] = this.event;
+        this.eventService.updateEvent(this.event, 'createschedule')
+          .subscribe(event => {
+              if (event.warning_message != 'overlaps') {
+                this.overlapEvents.splice(this.curEventIndex, 1);
+              }
+            },
+            error => {this.errorMessage = <any>error;  this.dialogVisible = false;});
+      }
       this.curEventIndex = -1;
+      this.isOverlap = false;
     } else {
       this.myScedule.events.push(this.event);
     }
     this.dialogVisible = false;
   }
-  editEvent(index) {
+  editEvent(index, overlap=false) {
     this.curEventIndex = index;
-    this.event = Object.assign({}, this.myScedule.events[index]);
+    if (!overlap) {
+      this.event = Object.assign({}, this.myScedule.events[index]);
+    } else {
+      var evt = this.overlapEvents[index];
+      evt.start = new Date(evt.start);
+      evt.end = new Date(evt.end);
+      this.event = Object.assign({}, evt);
+      this.isOverlap = true;
+    }
     this.dialogVisible = true;
   }
-  deleteEvent(index) {
-    this.myScedule.events.splice(index, 1);
+  deleteEvent(index, overlap=false) {
+    if (!overlap) {
+      this.myScedule.events.splice(index, 1);
+    } else {
+      const evt_id = this.overlapEvents[index].id;
+      this.eventService.deleteEvent(evt_id, 'createschedule')
+        .subscribe(res => {
+            this.overlapEvents.splice(index, 1);
+          },
+          error => {this.errorMessage = <any>error;});
+    }
   }
   saveSchedule() {
     let evnts = [];
