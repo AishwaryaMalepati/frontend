@@ -115,11 +115,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let event of overlapEvents">
+          <tr *ngFor="let event of overlapEvents; index as i">
             <td>{{event.empName}}</td>
             <td>{{event.location}}</td>
             <td>{{event.start | date:'medium' }}</td>
             <td>{{event.end | date:'medium' }}</td>
+            <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i, true)"></button></td>
+            <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i, true)"></button></td>
           </tr>
           </tbody>
         </table>
