@@ -41,7 +41,7 @@ export class ManagescheduleComponent implements OnInit {
   }
 
 // loading groups, locations and Employes
-  loadEvents(){
+  loadEvents() {
     this.eventService.getList('groups')
       .subscribe(groups => {
           groups = groups.map((group)=>{

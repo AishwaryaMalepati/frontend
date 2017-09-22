@@ -1,0 +1,22 @@
+<div id="wrapper">
+  <app-navbar></app-navbar>
+  <div style="margin: 70px auto;">
+      <div class="col-md-12 text-center">
+        <h1>Per Diem Calculator</h1>
+        <br>
+        <button pButton type="submit" class="btn btn-success" (click)="onclick()" label="Click to Calculate Per Diem for "></button>
+      <div>
+    <p-dataTable [value]="perdiemList" scrollable="true" scrollHeight="500px">
+      <p-header>Per Diem Calculation for </p-header>
+      <p-column field="first_name" header="First Name" [style]="{'width':'150px'}" frozen="true"></p-column>
+      <p-column field="last_name" header="Last Name" [style]="{'width':'150px'}" frozen="true"></p-column>
+      <p-column field="" header="Projected Work Days" [style]="{'width':'150px'}"></p-column>
+      <p-column field="" header="Per Diem ($)" [style]="{'width':'200px'}"></p-column>
+      <p-column field="" header="Reconciliation ($)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="" header="Total to be Paid ($)" [style]="{'width':'200px'}"></p-column>
+    </p-dataTable>
+  </div>
+
+  <!--<app-footer></app-footer>-->
+
+</div>

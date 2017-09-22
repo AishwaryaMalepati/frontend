@@ -102,9 +102,10 @@
 
     <p-dialog header="Schedule Creation" [(visible)]="successDialogVisible" [responsive]="true" showEffect="fade" [modal]="true" [contentStyle]="{'overflow':'visible'}"
               [style]="{'overflow':'visible'}" [resizable]="false">
-      <div> Schedule saved successfully</div>
+      <div> <i class="fa fa-check-circle fa-2x" style="color:green" aria-hidden="true"></i> Schedule saved successfully</div>
+      <br>
       <div class="table-responsive" *ngIf="overlapEvents.length" style="max-height:400; overflow:auto">
-        <div>Overlapped Events</div>
+        <div> <i class="fa fa-exclamation-triangle fa-2x" style="color:gold" aria-hidden="true"></i> Warning: the following overlap with existing schedule</div>
         <table class="table">
           <thead>
           <tr>
@@ -115,11 +116,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let event of overlapEvents">
+          <tr *ngFor="let event of overlapEvents; index as i">
             <td>{{event.empName}}</td>
             <td>{{event.location}}</td>
             <td>{{event.start | date:'medium' }}</td>
             <td>{{event.end | date:'medium' }}</td>
+            <td><button type="button" pButton icon="fa-edit" (click)="editEvent(i, true)"></button></td>
+            <td><button type="button" pButton icon="fa-close" (click)="deleteEvent(i, true)"></button></td>
           </tr>
           </tbody>
         </table>

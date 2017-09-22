@@ -29,7 +29,11 @@ export class NavbarComponent implements OnInit {
         ]
       },
       {
-        label: 'Per Diem', icon: 'fa-money fa-2x', routerLink: ['/perdiem']
+        label: 'Per Diem', icon: 'fa-money fa-2x',
+        items: [
+          {label: 'Per Diem', routerLink: ['/perdiem']},
+          {label: 'Per Diem Calculator', routerLink: ['/perdiemcalculator']}
+        ]
       },
       {
         label: 'Administration',

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-//import { provideAuth } from 'angular2-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // import { fakeBackendProvider } from './helpers/index';
@@ -24,12 +23,12 @@ import 'moment';
 import 'fullcalendar';
 
 // primeng components
-import {PanelModule, ScheduleModule, DialogModule, CalendarModule,DropdownModule} from 'primeng/primeng';
+import {PanelModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule} from 'primeng/primeng';
 import {InputTextModule, CheckboxModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
 import {MenubarModule, MultiSelectModule} from 'primeng/primeng';
-import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 import { MyscheduleComponent } from './pages/myschedule/myschedule.component';
 import { CreatescheduleComponent } from './pages/createschedule/createschedule.component';
@@ -42,6 +41,7 @@ import { AllschedulesComponent } from './pages/allschedules/allschedules.compone
 import { PerdiemComponent } from './pages/perdiem/perdiem.component';
 import { NascarcalendarComponent } from './base_components/nascarcalendar/nascarcalendar.component';
 import { ManagescheduleComponent } from './pages/manageschedule/manageschedule.component';
+import { PerdiemcalculatorComponent } from './pages/perdiemcalculator/perdiemcalculator.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,8 @@ import { ManagescheduleComponent } from './pages/manageschedule/manageschedule.c
     CreatescheduleComponent,
     PerdiemComponent,
     NascarcalendarComponent,
-    ManagescheduleComponent
+    ManagescheduleComponent,
+    PerdiemcalculatorComponent
   ],
   imports: [
     BrowserModule,
@@ -85,11 +86,6 @@ import { ManagescheduleComponent } from './pages/manageschedule/manageschedule.c
     AuthenticationService,
     UserService,
     EventService
-
-    // providers used to create fake backend
-    //fakeBackendProvider,
-    //MockBackend,
-    //BaseRequestOptions
   ],
   bootstrap: [AppComponent]
 })

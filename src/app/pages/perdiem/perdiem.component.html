@@ -6,24 +6,24 @@
       <p-header>Days on Track and Per Diem</p-header>
       <p-column field="first_name" header="First Name" [style]="{'width':'150px'}" frozen="true"></p-column>
       <p-column field="last_name" header="Last Name" [style]="{'width':'150px'}" frozen="true"></p-column>
-      <p-column field="days_jantomar" header="Days (Jan - Mar)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="jantomar" header="Per Diem (Jan - Mar) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_martoapr" header="Days (Mar - Apr)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="martoapr" header="Per Diem (Mar - Apr) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_aprtomay" header="Days (Apr - May)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="aprtomay" header="Per Diem (Apr - May) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_maytojun" header="Days (May - Jun)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="maytojun" header="Per Diem (May - Jun) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_juntojul" header="Days (Jun - Jul)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="juntojul" header="Per Diem (Jun - Jul) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_jultoaug" header="Days (Jul - Aug)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="jultoaug" header="Per Diem (Jul - Aug) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_augtosep" header="Days (Aug - Sep)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="augtosep" header="Per Diem (Aug - Sep) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_septooct" header="Days (Sep - Oct)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="septooct" header="Per Diem (Sep - Oct) $" [style]="{'width':'200px'}"></p-column>
-      <p-column field="days_octtonov" header="Days (Oct - Nov)" [style]="{'width':'150px'}"></p-column>
-      <p-column field="octtonov" header="Per Diem (Oct - Nov) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.jan_to_mar.total_days_worked" header="Days (Jan - Mar)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.jan_to_mar.total_amount" header="Per Diem (Jan - Mar) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.mar_to_apr.total_days_worked" header="Days (Mar - Apr)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.mar_to_apr.total_amount" header="Per Diem (Mar - Apr) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.apr_to_may.total_days_worked" header="Days (Apr - May)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.apr_to_may.total_amount" header="Per Diem (Apr - May) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.may_to_jun.total_days_worked" header="Days (May - Jun)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.may_to_jun.total_amount" header="Per Diem (May - Jun) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.jun_to_jul.total_days_worked" header="Days (Jun - Jul)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.jun_to_jul.total_amount" header="Per Diem (Jun - Jul) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.jul_to_aug.total_days_worked" header="Days (Jul - Aug)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.jul_to_aug.total_amount" header="Per Diem (Jul - Aug) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.aug_to_sep.total_days_worked" header="Days (Aug - Sep)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.aug_to_sep.total_amount" header="Per Diem (Aug - Sep) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.sep_to_oct.total_days_worked" header="Days (Sep - Oct)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.sep_to_oct.total_amount" header="Per Diem (Sep - Oct) $" [style]="{'width':'200px'}"></p-column>
+      <p-column field="amounts_by_date.oct_to_nov.total_days_worked" header="Days (Oct - Nov)" [style]="{'width':'150px'}"></p-column>
+      <p-column field="amounts_by_date.oct_to_nov.total_amount" header="Per Diem (Oct - Nov) $" [style]="{'width':'200px'}"></p-column>
       <p-column field="employee_id" header="ID" [style]="{'width':'150px'}"></p-column>
     </p-dataTable>
   </div>
