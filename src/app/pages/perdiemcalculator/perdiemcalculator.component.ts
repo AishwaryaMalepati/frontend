@@ -11,6 +11,8 @@ export class PerdiemcalculatorComponent implements OnInit {
   current_period: string;
   perdiemList: any[]=[];
   errorMessage: string;
+  showWarning: boolean = false;
+  statusMessage: string;
 
   public constructor(private eventService: EventService, private router: Router) { }
 
@@ -40,12 +42,34 @@ export class PerdiemcalculatorComponent implements OnInit {
     }
   }
 
-  calculatePerdiem() {
-    this.eventService.saveEvent({}, 'perdiem')
-      .subscribe(event => {
-          this.perdiemList = event;
-        },
-        error => {this.errorMessage = <any>error;}
-      );
+  closeDialog() {
+    this.showWarning = false;
+  }
+
+  calculatePerdiem(forceCalculate=false) {
+    if (this.perdiemList.length) {
+      this.showWarning = true;
+    }
+    if (forceCalculate || !this.perdiemList.length) {
+      if (this.showWarning) {
+        this.statusMessage = 'Updating records...';
+      } else {
+        this.statusMessage = 'Getting records...'
+      }
+
+      this.perdiemList = [];
+      this.showWarning = false;
+
+      this.eventService.saveEvent({}, 'perdiem')
+        .subscribe(event => {
+            this.perdiemList = event;
+            this.statusMessage = '';
+          },
+          error => {
+            this.errorMessage = <any>error;
+            this.statusMessage = 'Failed to get records. Please try again!';
+          }
+        );
+    }
   }
 }
