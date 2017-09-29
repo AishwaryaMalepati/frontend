@@ -77,7 +77,7 @@ export class ManagescheduleComponent implements OnInit {
 
   //update events for swap, copy and clear
   updateEvents() {
-    if(this.selectedAction != 2){
+    if (this.selectedAction != 2) {
       const reqObj = {emp1: this.selectedEmp1, emp2: this.selectedEmp2, start: this.convertDate(this.fromDate), end: this.convertDate(this.toDate)};
       const url = this.selectedAction === 3? 'createschedule/copy': 'createschedule/swap';
       this.eventService.saveEvent(reqObj, url)

@@ -1,0 +1,12 @@
+<div id="wrapper">
+  <app-navbar></app-navbar>
+  <div style="margin: 70px auto;">
+    <div class="col-md-12 ">
+      <h2>Race Schedule</h2>
+      <br>
+      <div class="form-group" >
+        <label for="actions">Select Year: </label>
+        <p-dropdown id="actions" [style]="{'width':'10%'}" [options]="actions" [(ngModel)]="selectedAction" name="actions">
+        </p-dropdown>
+      </div>
+    </div>

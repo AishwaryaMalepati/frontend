@@ -11,6 +11,7 @@ import { AllschedulesComponent } from './pages/allschedules/allschedules.compone
 import { PerdiemComponent } from './pages/perdiem/perdiem.component';
 import {PerdiemcalculatorComponent} from './pages/perdiemcalculator/perdiemcalculator.component';
 import {ManagescheduleComponent} from './pages/manageschedule/manageschedule.component';
+import {RacescheduleComponent} from './pages/raceschedule/raceschedule.component';
 import { AuthGuard } from './guards/index';
 export const routes: Routes = [
   {
@@ -52,6 +53,10 @@ export const routes: Routes = [
   {
     path: 'perdiemcalculator',
     component: PerdiemcalculatorComponent
+  },
+  {
+    path: 'raceschedule',
+    component: RacescheduleComponent
   }
 ];
 export const RoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);

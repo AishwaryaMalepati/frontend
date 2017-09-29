@@ -19,15 +19,21 @@ export class NavbarComponent implements OnInit {
       },
       {
         label: 'Schedule', icon: 'fa-calendar fa-2x',
-        items: [{
-                  label: 'All Schedules',
-                  routerLink: ['/allschedules']
-                },
-                {label: 'My Schedule', routerLink: ['/myschedule']},
-          {label: 'Create Schedule', routerLink: ['/createschedule']},
-          {label: 'Manage Schedule', routerLink: ['/manageschedule']}
-        ]
-      },
+        items: [
+               {
+                 label: 'Employee Schedule',
+                 items: [
+                   {label: 'All Schedules', routerLink: ['/allschedules']},
+                   {label: 'My Schedule', routerLink: ['/myschedule']},
+                   {label: 'Create Schedule', routerLink: ['/createschedule']},
+                   {label: 'Manage Schedule', routerLink: ['/manageschedule']}
+                   ]
+               },
+               {
+                 label: 'Race Schedule', routerLink: ['/raceschedule']
+               }
+      ]
+  },
       {
         label: 'Per Diem', icon: 'fa-money fa-2x',
         items: [
