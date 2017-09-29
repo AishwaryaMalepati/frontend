@@ -11,8 +11,11 @@ export class PerdiemcalculatorComponent implements OnInit {
   current_period: string;
   perdiemList: any[]=[];
   errorMessage: string;
+<<<<<<< HEAD
   showWarning: boolean = false;
   statusMessage: string;
+=======
+>>>>>>> 94e66528dc65c37e887dab77623ae5ba6106c252
 
   public constructor(private eventService: EventService, private router: Router) { }
 
@@ -40,6 +43,7 @@ export class PerdiemcalculatorComponent implements OnInit {
         this.current_period = monthLabels[monthIndex - 1];
       }
     }
+<<<<<<< HEAD
   }
 
   closeDialog() {
@@ -71,5 +75,16 @@ export class PerdiemcalculatorComponent implements OnInit {
           }
         );
     }
+=======
+  }
+
+  calculatePerdiem() {
+    this.eventService.saveEvent({}, 'perdiem')
+      .subscribe(event => {
+          this.perdiemList = event;
+        },
+        error => {this.errorMessage = <any>error;}
+      );
+>>>>>>> 94e66528dc65c37e887dab77623ae5ba6106c252
   }
 }
