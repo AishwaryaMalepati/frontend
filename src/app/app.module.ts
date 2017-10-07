@@ -23,7 +23,7 @@ import 'moment';
 import 'fullcalendar';
 
 // primeng components
-import {PanelModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule} from 'primeng/primeng';
+import {PanelModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule, ProgressBarModule} from 'primeng/primeng';
 import {InputTextModule, CheckboxModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
@@ -80,7 +80,8 @@ import { RacescheduleComponent } from './pages/raceschedule/raceschedule.compone
     MultiSelectModule,
     DataTableModule,
     SharedModule,
-    DropdownModule
+    DropdownModule,
+    ProgressBarModule
   ],
 //  providers: [AuthService],
   providers: [

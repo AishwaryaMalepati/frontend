@@ -1,12 +1,203 @@
-<div id="wrapper">
+<div id="wrapper" class="container">
   <app-navbar></app-navbar>
-  <div style="margin: 70px auto;">
-    <div class="col-md-12 ">
-      <h2>Race Schedule</h2>
-      <br>
-      <div class="form-group" >
-        <label for="actions">Select Year: </label>
-        <p-dropdown id="actions" [style]="{'width':'10%'}" [options]="actions" [(ngModel)]="selectedAction" name="actions">
-        </p-dropdown>
+  <div style="margin: 70px auto;width:100%">
+    <h1>Race Schedule</h1>
+    <h5>Click a race to view details</h5>
+    <p-dataTable [value]="races" scrollable="true" scrollHeight="500px" selectionMode="single" (onRowClick)="selectRace($event)">
+      <p-header>Races</p-header>
+      <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>
+      <p-column field="total_progress" header="Schedule Completion Status (%)" [style]="{'width':'150px'}">
+      </p-column>
+    </p-dataTable>
+
+    <div *ngIf="selectedRace" class="table-responsive" style="overflow:auto">
+      <h3> <i class="fa fa-flag-checkered fa-2x"></i> {{ selectedRace.race_location}}</h3>
+      <div>
+        Progress:
+         <span><p-progressBar [value]="selectedRace.total_progress"></p-progressBar></span>
       </div>
+      <br>
+      <div class="well">
+      <p>
+        Schedule summary: Required vs Scheduled
+        <ul class="list-group">
+          <li class="list-group-item justify-content-between ">
+           Cup Box Trailers
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.cups.count < selectedRace.event_details.cups.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.cups.count >= selectedRace.event_details.cups.required">complete</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+            NXS Box Trailers
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.nxs.count < selectedRace.event_details.nxs.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.nxs.count >= selectedRace.event_details.nxs.required">complete</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+            Titan Trailers
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.titans.count < selectedRace.event_details.titans.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.titans.count >= selectedRace.event_details.titans.required">complete</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+           Tv Trailers
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.tvs.count < selectedRace.event_details.tvs.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.tvs.count >= selectedRace.event_details.tvs.required">complete</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+           Tire/Wheel Trailers
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.wheels.count < selectedRace.event_details.wheels.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.wheels.count >= selectedRace.event_details.wheels.required">complete</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+           Coaches
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.required}}</span>
+            <span class="label label-danger" *ngIf="selectedRace.event_details.coaches.count < selectedRace.event_details.coaches.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.event_details.coaches.count >= selectedRace.event_details.coaches.required">complete</span>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Cup Box Trailers
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.cups.count >= selectedRace.event_details.cups.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.cups.count < selectedRace.event_details.cups.required"></i>
+      </h4>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Tractor</th>
+          <th>Trailer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.cups.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.cups.vehicles.names[i] }}</td>
+          <td>{{ selectedRace.event_details.cups.trailers.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> NXS Box Trailers
+      <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.nxs.count >= selectedRace.event_details.nxs.required"></i>
+      <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.nxs.count < selectedRace.event_details.nxs.required"></i>
+      </h4>
+      </div>
+        <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Tractor</th>
+          <th>Trailer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.nxs.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.nxs.vehicles.names[i] }}</td>
+          <td>{{ selectedRace.event_details.nxs.trailers.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Titan Trailers
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.titans.count >= selectedRace.event_details.titans.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.titans.count < selectedRace.event_details.titans.required"></i>
+      </h4>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Tractor</th>
+          <th>Trailer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.titans.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.titans.vehicles.names[i] }}</td>
+          <td>{{ selectedRace.event_details.titans.trailers.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> TV Trailers
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.tvs.count >= selectedRace.event_details.tvs.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.tvs.count < selectedRace.event_details.tvs.required"></i>
+      </h4>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Tractor</th>
+          <th>Trailer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.tvs.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.tvs.vehicles.names[i] }}</td>
+          <td>{{ selectedRace.event_details.tvs.trailers.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="text-left"><h4> <i class="fa fa-truck fa-2x"></i> Tire/Wheel Trailers
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.wheels.count >= selectedRace.event_details.wheels.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.wheels.count < selectedRace.event_details.wheels.required"></i>
+      </h4>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Tractor</th>
+          <th>Trailer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.wheels.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.wheels.vehicles.names[i] }}</td>
+          <td>{{ selectedRace.event_details.wheels.trailers.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="text-left"><h4><i class="fa fa-bus fa-2x"></i> Coaches
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.coaches.count >= selectedRace.event_details.coaches.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.coaches.count < selectedRace.event_details.coaches.required"></i>
+      </h4>
+      </div>
+      <table class="table">
+        <thead>
+        <tr class="info">
+          <th>Driver</th>
+          <th>Coach</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let driver of selectedRace.event_details.coaches.drivers.names; index as i">
+          <td>{{ driver }}</td>
+          <td>{{ selectedRace.event_details.coaches.vehicles.names[i] }}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
+  <!--<app-footer></app-footer>-->
+</div>

@@ -25,6 +25,7 @@ body {
   top: 0px;
   left: 0;
   display: inline-block;
+  overflow: scroll;
 }
 #main-wrapper {
   position: absolute;
@@ -32,6 +33,7 @@ body {
   right: 0px;
   overflow-y: auto;
   padding-top: 70px;
+  overflow: scroll;
 }
 #main {
   position: relative;

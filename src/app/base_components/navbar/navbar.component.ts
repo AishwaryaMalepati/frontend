@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
-import {RouterLink} from "@angular/router";
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
