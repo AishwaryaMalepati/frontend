@@ -3,6 +3,40 @@
   <div style="margin: 70px auto;width:100%">
     <h1>Race Schedule</h1>
     <h5>Click a race to view details</h5>
+
+    <label for="">Select Year</label>
+    <p-dropdown id="selectedYear" [style]="{'width':'20%'}" [options]="years" [(ngModel)]="selectedYear" name="selectedYear">
+    </p-dropdown>
+
+    <button pButton type="button" (click)="show_default_counts=true" label="View Master Resource Count"  class="ui-button-warning"></button>
+    <button pButton type="button" (click)="show_selectedyear_counts=true" label="View {{selectedYear}} Resource Count"  class="ui-button-success"></button>
+
+    <p-dataTable *ngIf="show_default_counts" [value]="defaultrcounts" scrollable="true" scrollHeight="500px" >
+      <p-header>Master Resource Counts
+        <button type="button" pButton icon="fa fa-window-close" class="ui-button-danger" style="float:right" (click)="show_default_counts=false" label="Close"></button>
+      </p-header>
+      <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>
+      <p-column field="cup_box_trailer" header="Cup Box Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="nxs_box_trailer" header="NXS Box Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="titan_trailer" header="Titan Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="wheel_trailer" header="Tire/Wheel Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="coach" header="Coaches" [style]="{'width':'150px'}"></p-column>
+      <p-column field="titan_trucks" header="Air Titans" [style]="{'width':'150px'}"></p-column>
+    </p-dataTable>
+
+    <p-dataTable *ngIf="show_selectedyear_counts" [value]="rcounts" scrollable="true" scrollHeight="500px" >
+      <p-header>Master Resource Counts
+        <button type="button" pButton icon="fa fa-window-close" class="ui-button-danger" style="float:right" (click)="show_selectedyear_counts=false" label="Close"></button>
+      </p-header>
+      <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>
+      <p-column field="cup_box_trailer" header="Cup Box Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="nxs_box_trailer" header="NXS Box Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="titan_trailer" header="Titan Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="wheel_trailer" header="Tire/Wheel Trailers" [style]="{'width':'150px'}"></p-column>
+      <p-column field="coach" header="Coaches" [style]="{'width':'150px'}"></p-column>
+      <p-column field="titan_trucks" header="Air Titans" [style]="{'width':'150px'}"></p-column>
+    </p-dataTable>
+
     <p-dataTable [value]="races" scrollable="true" scrollHeight="500px" selectionMode="single" (onRowClick)="selectRace($event)">
       <p-header>Races</p-header>
       <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>

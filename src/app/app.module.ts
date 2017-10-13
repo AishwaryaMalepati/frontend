@@ -43,6 +43,7 @@ import { NascarcalendarComponent } from './base_components/nascarcalendar/nascar
 import { ManagescheduleComponent } from './pages/manageschedule/manageschedule.component';
 import { PerdiemcalculatorComponent } from './pages/perdiemcalculator/perdiemcalculator.component';
 import { RacescheduleComponent } from './pages/raceschedule/raceschedule.component';
+import { RacedetailsComponent } from './pages/racedetails/racedetails.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { RacescheduleComponent } from './pages/raceschedule/raceschedule.compone
     NascarcalendarComponent,
     ManagescheduleComponent,
     PerdiemcalculatorComponent,
-    RacescheduleComponent
+    RacescheduleComponent,
+    RacedetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import { PerdiemComponent } from './pages/perdiem/perdiem.component';
 import {PerdiemcalculatorComponent} from './pages/perdiemcalculator/perdiemcalculator.component';
 import {ManagescheduleComponent} from './pages/manageschedule/manageschedule.component';
 import {RacescheduleComponent} from './pages/raceschedule/raceschedule.component';
+import {RacedetailsComponent} from './pages/racedetails/racedetails.component';
 import { AuthGuard } from './guards/index';
 export const routes: Routes = [
   {
@@ -57,6 +58,10 @@ export const routes: Routes = [
   {
     path: 'raceschedule',
     component: RacescheduleComponent
+  },
+  {
+    path: 'racedetails',
+    component: RacedetailsComponent
   }
 ];
 export const RoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);

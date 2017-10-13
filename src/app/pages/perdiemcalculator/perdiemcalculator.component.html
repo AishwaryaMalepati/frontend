@@ -9,8 +9,10 @@
 
     <h6>{{ statusMessage }}</h6>
 
-    <p-dataTable [value]="perdiemList" scrollable="true" scrollHeight="500px">
-      <p-header>Per Diem Calculation for {{this.current_period}}</p-header>
+    <p-dataTable #dt [value]="perdiemList" scrollable="true" scrollHeight="500px">
+      <p-header>Per Diem Calculation for {{this.current_period}}
+        <button type="button"  pButton icon="fa-file-o" iconPos="right"  label="Export" (click)="dt.exportCSV()" style="float:right"></button>
+      </p-header>
       <p-column field="first_name" header="First Name" [style]="{'width':'150px'}"></p-column>
       <p-column field="last_name" header="Last Name" [style]="{'width':'150px'}"></p-column>
       <p-column field="projected_days" header="Projected Work Days" [style]="{'width':'150px'}"></p-column>

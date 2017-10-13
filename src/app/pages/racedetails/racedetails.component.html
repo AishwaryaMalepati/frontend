@@ -1,0 +1,48 @@
+<div id="wrapper" class="container">
+  <app-navbar></app-navbar>
+  <div style="margin: 70px auto;width:100%">
+    <p-dataTable [value]="races" selectionMode="single" [(selection)]="selectedRace" (onRowSelect)="onRowSelect($event)">
+      <p-header>NASCAR Race Schedule
+        <button type="button" pButton icon="fa-plus" style="float:right" (click)="showDialogToAdd()" label="Add"></button>
+      </p-header>
+      <p-column field="race_location" header="Location" [sortable]="true"></p-column>
+      <p-column field="year" header="Year" [sortable]="true"></p-column>
+      <p-column field="mec_date" header="MEC Date" [sortable]="true"></p-column>
+      <p-column field="nxs_date" header="NXS Date" [sortable]="true"></p-column>
+      <p-column field="ctws_date" header="CTWS Date" [sortable]="true"></p-column>
+    </p-dataTable>
+
+    <p-dialog header="Race Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
+              [style]="{'overflow':'visible'}" [resizable]="false">
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="race">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="race_location">Race Location</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="race_location" [(ngModel)]="race.race_location" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="year">Year</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="year" [(ngModel)]="race.year" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="mec_date">MEC Date</label></div>
+          <div class="ui-grid-col-8"><p-calendar id="mec_date" [(ngModel)]="race.mec_date" dateFormat="YYYY-MM-DD" [showTime]="false"></p-calendar></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="nxs_date">NXS Date</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="nxs_date" [(ngModel)]="race.nxs_date" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="ctws_date">CTWS Date</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="ctws_date" [(ngModel)]="race.ctws_date" /></div>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+          <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+
+  </div>
+</div>

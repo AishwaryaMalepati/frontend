@@ -10,6 +10,9 @@ import {Observable} from 'rxjs/Rx';
 })
 export class RacescheduleComponent implements OnInit {
   races: any[]=[];
+  years: any[]=[];
+  rcounts: any[]=[];
+  defaultrcounts: any[]=[];
   vehicles: any[]=[];
   coaches: any[]=[];
   trailers: any[]=[];
@@ -19,8 +22,8 @@ export class RacescheduleComponent implements OnInit {
   public constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
-    Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'),
-      this.eventService.getList('groups'), this.eventService.getList('race_schedule')])
+    Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'),
+      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year')])
       .subscribe((response) => {
         this.vehicles = response[0].filter( (v) => {
           if(v.type === 6) {
@@ -50,6 +53,12 @@ export class RacescheduleComponent implements OnInit {
           g.value = g.id
           return g;
         });
+        this.years = response[3].filter( (y) => {
+          y.year = y.year;
+          y.label = y.year;
+          y.value = y.year;
+          return y;
+        } );
         var races_ = [];
         this.races = response[3].map((race) => {
           var progress = 0;
@@ -81,6 +90,10 @@ export class RacescheduleComponent implements OnInit {
           race['wheels'] = this.getTableData('wheels', race);
           return race;
         });
+        var defaultrcounts_ = [];
+        this.defaultrcounts = response[4].map((defaultrcount) => { return defaultrcount; })
+        var rcounts_ = [];
+        this.rcounts = response[5].map((rcount) => { return rcount; })
         console.log(this.vehicles);
         console.log(this.trailers);
         console.log(this.races);

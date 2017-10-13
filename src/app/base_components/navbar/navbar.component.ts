@@ -30,7 +30,11 @@ export class NavbarComponent implements OnInit {
                    ]
                },
                {
-                 label: 'Race Schedule', routerLink: ['/raceschedule']
+                 label: 'Race Schedule',
+                 items: [
+                   {label: 'NASCAR Schedule ', routerLink: ['/racedetails']},
+                   {label: 'Resource Schedule', routerLink: ['/raceschedule']}
+                 ]
                }
       ]
   },
