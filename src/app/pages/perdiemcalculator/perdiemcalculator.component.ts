@@ -40,6 +40,8 @@ export class PerdiemcalculatorComponent implements OnInit {
         this.current_period = monthLabels[monthIndex - 1];
       }
     }
+
+    this.calculatePerdiem();
   }
 
   closeDialog() {
