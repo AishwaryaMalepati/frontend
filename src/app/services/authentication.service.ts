@@ -20,12 +20,12 @@ export class AuthenticationService {
     let headers = new Headers({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'headerPrefix' : 'JWT'
+      'headerPrefix' : 'JWT'
     });
     let options = new RequestOptions({
       headers: headers
     });
-   return this._http.post('http://localhost:8000/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
+   return this._http.post('http://138.197.101.197/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;

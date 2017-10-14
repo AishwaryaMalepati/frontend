@@ -14,7 +14,7 @@ import {AuthenticationService} from './authentication.service';
 
 @Injectable()
 export class EventService {
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = 'http://138.197.101.197/api/';
 
   constructor(private http: Http, private authenticationService: AuthenticationService) {
 
