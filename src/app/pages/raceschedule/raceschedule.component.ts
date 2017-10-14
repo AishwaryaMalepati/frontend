@@ -16,14 +16,19 @@ export class RacescheduleComponent implements OnInit {
   vehicles: any[]=[];
   coaches: any[]=[];
   trailers: any[]=[];
-  groups:any[]=[];
+  groups: any[]=[];
+  employeesAtTrack: object;
+  employeesForDuty: object;
   selectedRace: object;
+  selectedEmps: any[]=[];
+  airTitanDutyEmployees: object;
+  availableEmployees: any[]=[];
   errorMessage: string;
   public constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'),
-      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year')])
+      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year'), this.eventService.getList('employees_at_track'), this.eventService.getList('employees/available')])
       .subscribe((response) => {
         this.vehicles = response[0].filter( (v) => {
           if(v.type === 6) {
@@ -90,17 +95,32 @@ export class RacescheduleComponent implements OnInit {
           race['wheels'] = this.getTableData('wheels', race);
           return race;
         });
+
         var defaultrcounts_ = [];
         this.defaultrcounts = response[4].map((defaultrcount) => { return defaultrcount; })
         var rcounts_ = [];
         this.rcounts = response[5].map((rcount) => { return rcount; })
+
+        this.employeesAtTrack = {};
+        for (var loc_id in response[6]) {
+          var employees = [];
+          for (var i=0; i < response[6][loc_id]['ids'].length; i++) {
+            employees.push({
+              value: response[6][loc_id]['ids'][i],
+              label: response[6][loc_id]['names'][i]
+            })
+          }
+          this.employeesAtTrack[loc_id] = employees;
+        }
+
+        this.availableEmployees = response[7].map((emp) => {emp.name = emp.first_name + ' ' + emp.last_name; return emp; });
+
         console.log(this.vehicles);
         console.log(this.trailers);
         console.log(this.races);
+        console.log(this.employeesAtTrack);
 
       }, error => this.errorMessage = <any>error);
-
-
   }
   getTableData(type: string, race) {
     let data = [];
@@ -142,11 +162,36 @@ export class RacescheduleComponent implements OnInit {
 
       });
   }
+  saveDutyEmps(duty_id) {
+    this.eventService.saveEvent({emp_ids: this.selectedEmps, duty_id: duty_id, race_id: this.selectedRace['id']}, 'race_duty')
+      .subscribe((response) => {
+        if (response['success']) {
+          this.airTitanDutyEmployees = response['data'];
+          this.selectedEmps = [];
+        }
+      });
+  }
   goBack() {
     this.selectedRace = null;
+    this.employeesForDuty = null;
   }
   selectRace(e) {
     this.selectedRace = e.data;
+    this.employeesForDuty = this.employeesAtTrack[this.selectedRace['race_location_id']];
+    var queryParams = 'race_id=' + e.data['id'] + '&duty_id=' + 1; // air titan duty
+    this.eventService.getList('race_duty', queryParams)
+      .subscribe((response) => {
+        if (response['success']) {
+          this.airTitanDutyEmployees = response['data'];
+        }
+      });
   }
-
+  removeEmployee(emp_id, duty_id) {
+    this.eventService.updateEvent({'id': emp_id, 'duty_id': duty_id, 'race_id': this.selectedRace['id']}, 'race_duty')
+      .subscribe((response) => {
+        if (response['success']) {
+          this.airTitanDutyEmployees = response['data'];
+        }
+      })
+  }
 }
