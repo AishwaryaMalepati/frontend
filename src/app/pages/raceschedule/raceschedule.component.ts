@@ -22,8 +22,7 @@ export class RacescheduleComponent implements OnInit {
   public constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
-    Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'),
-      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year')])
+    Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'), this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year')])
       .subscribe((response) => {
         this.vehicles = response[0].filter( (v) => {
           if(v.type === 6) {
@@ -148,5 +147,4 @@ export class RacescheduleComponent implements OnInit {
   selectRace(e) {
     this.selectedRace = e.data;
   }
-
 }
