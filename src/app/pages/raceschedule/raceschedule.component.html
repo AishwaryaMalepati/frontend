@@ -293,21 +293,30 @@
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Air Titan Duty</h4>
         <label for="">Add Employees</label>
-        <p-dropdown id="selectedEmp" [style]="{'width':'100%'}" [options]="ddlEmployees" [(ngModel)]="selectedEmp" name="selectedEmp">
-        </p-dropdown>
-        <p-dataTable [value]="">
-          <p-column field="" header="Employee"></p-column>
+        <p-multiSelect [id]="'selectedEmp'" [name]="'selectedEmp'" [style]="{'width':'100%'}" [options]="employeesForDuty" [(ngModel)]="selectedEmps" name="selectedEmps">
+        </p-multiSelect>
+        <div class="text-center">
+          <button type="submit" class="btn btn-success" (click)="saveDutyEmps(1)">Save</button>
+        </div>
+
+        <p-dataTable [value]="airTitanDutyEmployees">
+          <p-column field="name" header="Employee"></p-column>
           <p-column styleClass="col-button">
             <ng-template pTemplate="header">
               <button type="button" pButton icon="fa fa-trash"></button>
             </ng-template>
-            <ng-template let-car="rowData" pTemplate="body">
-              <button type="button" pButton (click)="removeEmployee(Employee)" icon="fa fa-trash"></button>
+            <ng-template let-col let-emp="rowData" pTemplate="body">
+              <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
             </ng-template>
           </p-column>
         </p-dataTable>
 
       </div>
+
+      <div class="text-left"><h4>Available Employees</h4></div>
+      <p-dataTable [value]="availableEmployees">
+        <p-column field="name" header="Employee"></p-column>
+      </p-dataTable>
   </div>
   <!--<app-footer></app-footer>-->
 </div>
