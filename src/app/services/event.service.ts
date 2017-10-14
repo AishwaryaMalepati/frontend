@@ -20,10 +20,10 @@ export class EventService {
 
   }
 
-  getList(type): Observable<any[]> {
+  getList(type, query=''): Observable<any[]> {
     let headers = new Headers({ 'Authorization': 'JWT ' + this.authenticationService.token });
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(`${this.baseUrl}${type}/`, options)
+    return this.http.get(`${this.baseUrl}${type}/?${query}`, options)
       .map((response: Response) => <any[]> response.json())
       //.do(data => console.log('All: ' +  JSON.stringify(data)))
       .catch(this.handleError);
