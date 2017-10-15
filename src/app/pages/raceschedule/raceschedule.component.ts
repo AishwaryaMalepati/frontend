@@ -23,12 +23,13 @@ export class RacescheduleComponent implements OnInit {
   selectedEmps: any[]=[];
   airTitanDutyEmployees: object;
   availableEmployees: any[]=[];
+  selectedYear: string;
   errorMessage: string;
   public constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'),
-      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('race_resource_count_by_year'), this.eventService.getList('employees_at_track'), this.eventService.getList('employees/available')])
+      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('employees_at_track'), this.eventService.getList('employees/available')])
       .subscribe((response) => {
         this.vehicles = response[0].filter( (v) => {
           if(v.type === 6) {
@@ -98,22 +99,20 @@ export class RacescheduleComponent implements OnInit {
 
         var defaultrcounts_ = [];
         this.defaultrcounts = response[4].map((defaultrcount) => { return defaultrcount; })
-        var rcounts_ = [];
-        this.rcounts = response[5].map((rcount) => { return rcount; })
 
         this.employeesAtTrack = {};
-        for (var loc_id in response[6]) {
+        for (var loc_id in response[5]) {
           var employees = [];
-          for (var i=0; i < response[6][loc_id]['ids'].length; i++) {
+          for (var i=0; i < response[5][loc_id]['ids'].length; i++) {
             employees.push({
-              value: response[6][loc_id]['ids'][i],
-              label: response[6][loc_id]['names'][i]
+              value: response[5][loc_id]['ids'][i],
+              label: response[5][loc_id]['names'][i]
             })
           }
           this.employeesAtTrack[loc_id] = employees;
         }
 
-        this.availableEmployees = response[7].map((emp) => {emp.name = emp.first_name + ' ' + emp.last_name; return emp; });
+        this.availableEmployees = response[6].map((emp) => {emp.name = emp.first_name + ' ' + emp.last_name; return emp; });
 
         console.log(this.vehicles);
         console.log(this.trailers);
@@ -136,6 +135,16 @@ export class RacescheduleComponent implements OnInit {
       })
     });
     return data;
+  }
+  getResourceCountByYear() {
+    var query = '';
+    if (this.selectedYear) {
+      query = `year=${this.selectedYear}`;
+    }
+    this.eventService.getList('race_resource_count_by_year', query)
+      .subscribe((response) => {
+        this.rcounts = response;
+      });
   }
   changeVehicle(evt, cup) {
     cup['vehicle'] = evt.originalEvent.target.innerText.trim();
