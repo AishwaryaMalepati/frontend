@@ -11,10 +11,10 @@
     <button pButton type="button" (click)="show_default_counts=true" label="View Master Resource Count"  class="ui-button-warning"></button>
     <button pButton type="button" (click)="show_selectedyear_counts=true; getResourceCountByYear()" label="View {{selectedYear}} Resource Count"  class="ui-button-success"></button>
 
-    <p-dataTable *ngIf="show_default_counts" [value]="defaultrcounts" scrollable="true" scrollHeight="500px" >
+    <p-dataTable *ngIf="show_default_counts" [value]="defaultrcounts" scrollable="true" scrollHeight="500px" selectionMode="single" [(selection)]="selectedResourceCount" (onRowSelect)="onRowSelect($event, 'default')">
       <p-header>Master Resource Counts
         <button type="button" pButton icon="fa fa-window-close" class="ui-button-danger" style="float:right" (click)="show_default_counts=false" label="Close"></button>
-        <button type="button" pButton icon="fa-plus" style="float:right" (click)="showDialogToAdd()" label="Add"></button>
+        <button type="button" pButton icon="fa-plus" style="float:right" (click)="addResourceCount('default')" label="Add"></button>
       </p-header>
       <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>
       <p-column field="cup_box_trailer" header="Cup Box Trailers" [style]="{'width':'150px'}"></p-column>
@@ -25,7 +25,7 @@
       <p-column field="titan_trucks" header="Air Titans" [style]="{'width':'150px'}"></p-column>
     </p-dataTable>
 
-    <p-dataTable *ngIf="show_selectedyear_counts" [value]="rcounts" scrollable="true" scrollHeight="500px" selectionMode="single" [(selection)]="selectedRaceResource" (onRowSelect)="onRowSelect($event)">
+    <p-dataTable *ngIf="show_selectedyear_counts" [value]="rcounts" scrollable="true" scrollHeight="500px" selectionMode="single" [(selection)]="selectedResourceCount" (onRowSelect)="onRowSelect($event, 'selectedYear')">
       <p-header>{{selectedYear}} Resource Counts
         <button type="button" pButton icon="fa fa-window-close" class="ui-button-danger" style="float:right" (click)="show_selectedyear_counts=false" label="Close"></button>
         <button type="button" pButton icon="fa fa-download" style="float:right" (click)="updateResourceCountByYear()" label="Import from Master"></button>
@@ -41,32 +41,40 @@
 
     <p-dialog header="Race Resource Count" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
               [style]="{'overflow':'visible'}" [resizable]="false">
-      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="race">
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="resourceCount">
         <div class="ui-grid-row">
           <div class="ui-grid-col-4"><label for="race_location">Race Location</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="race_location" [(ngModel)]="race.race_location" /></div>
+          <div class="ui-grid-col-8"><input pInputText id="race_location" [(ngModel)]="resourceCount.race_location" /></div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="year">Year</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="year" [(ngModel)]="race.year" /></div>
+          <div class="ui-grid-col-4"><label for="cupsc">Cup Box Trailers</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="cupsc" [(ngModel)]="resourceCount.cup_box_trailer" /></div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="mec_date">MEC Date</label></div>
-          <div class="ui-grid-col-8"><p-calendar id="mec_date" [(ngModel)]="race.mec_date" dateFormat="YYYY-MM-DD" [showTime]="false"></p-calendar></div>
+          <div class="ui-grid-col-4"><label for="nxsc">NXS Box Trailers</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="nxsc" [(ngModel)]="resourceCount.nxs_box_trailer" /></div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="nxs_date">NXS Date</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="nxs_date" [(ngModel)]="race.nxs_date" /></div>
+          <div class="ui-grid-col-4"><label for="titansc">Titan Trailers</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="titansc" [(ngModel)]="resourceCount.titan_trailer" /></div>
         </div>
         <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="ctws_date">CTWS Date</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="ctws_date" [(ngModel)]="race.ctws_date" /></div>
+          <div class="ui-grid-col-4"><label for="wheelsc">Tire/Wheel Trailers</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="wheelsc" [(ngModel)]="resourceCount.wheel_trailer" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="coachc">Coaches</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="coachc" [(ngModel)]="resourceCount.coach" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="airtitansc">Air Titans</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="airtitansc" [(ngModel)]="resourceCount.titan_trucks" /></div>
         </div>
       </div>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
-          <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+          <button type="button" pButton icon="fa-close" (click)="deleteResourceCount(RCType)" label="Delete"></button>
+          <button type="button" pButton icon="fa-check" (click)="saveResourceCount(RCType)" label="Save"></button>
         </div>
       </p-footer>
     </p-dialog>
