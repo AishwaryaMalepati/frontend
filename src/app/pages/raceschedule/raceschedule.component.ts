@@ -149,18 +149,51 @@ export class RacescheduleComponent implements OnInit {
     const query = `?employee=${cup.dId}&location=${this.selectedRace['race_location_id']}&trailer=${evt.value}`;
     this.updateData(query);
   }
-  changeGroup(evt, cup) {
+  changeGroup(evt, cup, curGroup) {
     cup['gName'] = evt.originalEvent.target.innerText.trim();
     cup['gId'] = evt.value;
     const query = `?employee=${cup.dId}&location=${this.selectedRace['race_location_id']}&group=${evt.value}`;
-    this.updateData(query);
+    this.updateData(query, cup.dId, curGroup, cup['gName']);
   }
-  updateData(query) {
+  updateData(query, driverId=null, curGroup=null, newGroup=null) {
 
     this.eventService.updateRaceInfo(query)
       .subscribe((response) => {
-
+        this.updateDriverGroup(driverId, curGroup, newGroup);
+        console.log(this.selectedRace);
       });
+  }
+  updateDriverGroup(driverId, curGroup, newGroup) {
+    var curGroupDrivers = [];
+    var newGroupDrivers = [];
+    var updatedDriver;
+    var newGroupKey;
+    for (var i=0; i < this.selectedRace[curGroup].length; i++) {
+      if (this.selectedRace[curGroup][i].dId != driverId) {
+        curGroupDrivers.push(this.selectedRace[curGroup][i]);
+      } else {
+        updatedDriver = this.selectedRace[curGroup][i];
+      }
+    }
+    this.selectedRace[curGroup] = curGroupDrivers;
+
+    if (newGroup === 'Air Titan') {
+      newGroupKey = 'titans';
+    } else if (newGroup === 'Box Truck') {
+      newGroupKey = 'cups';
+    } else if (newGroup === 'Coach') {
+      newGroupKey = 'coaches';
+    } else if (newGroup === 'Xfinity') {
+      newGroupKey = 'nxs';
+    } else if (newGroup === 'TV') {
+      newGroupKey = 'tvs';
+    } else if (newGroup === 'Wheels') {
+      newGroupKey = 'wheels';
+    }
+
+    newGroupDrivers = this.selectedRace[newGroupKey].slice();
+    newGroupDrivers.push(updatedDriver);
+    this.selectedRace[newGroupKey] = newGroupDrivers;
   }
   saveDutyEmps(duty_id) {
     this.eventService.saveEvent({emp_ids: this.selectedEmps, duty_id: duty_id, race_id: this.selectedRace['id']}, 'race_duty')

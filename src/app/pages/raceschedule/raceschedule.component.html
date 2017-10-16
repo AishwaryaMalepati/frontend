@@ -91,53 +91,53 @@
         <ul class="list-group">
           <li class="list-group-item justify-content-between ">
             Cup Box Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.cups.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.cups.count < selectedRace.event_details.cups.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.cups.count >= selectedRace.event_details.cups.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required">complete</span>
           </li>
           <li class="list-group-item justify-content-between">
             NXS Box Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.nxs.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.nxs.count < selectedRace.event_details.nxs.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.nxs.count >= selectedRace.event_details.nxs.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.nxs.length < selectedRace.event_details.nxs.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.nxs.length >= selectedRace.event_details.nxs.required">complete</span>
           </li>
           <li class="list-group-item justify-content-between">
             Titan Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.titans.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.titans.count < selectedRace.event_details.titans.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.titans.count >= selectedRace.event_details.titans.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.titans.length < selectedRace.event_details.titans.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.titans.length >= selectedRace.event_details.titans.required">complete</span>
           </li>
           <li class="list-group-item justify-content-between">
             Tv Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.tvs.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.tvs.count < selectedRace.event_details.tvs.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.tvs.count >= selectedRace.event_details.tvs.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.tvs.length < selectedRace.event_details.tvs.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.tvs.length >= selectedRace.event_details.tvs.required">complete</span>
           </li>
           <li class="list-group-item justify-content-between">
             Tire/Wheel Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.wheels.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.wheels.count < selectedRace.event_details.wheels.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.wheels.count >= selectedRace.event_details.wheels.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.wheels.length < selectedRace.event_details.wheels.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.wheels.length >= selectedRace.event_details.wheels.required">complete</span>
           </li>
           <li class="list-group-item justify-content-between">
             Coaches
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.count}}</span>
+            <span class="badge badge-default badge-pill">{{selectedRace.coaches.length}}</span>
             <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.event_details.coaches.count < selectedRace.event_details.coaches.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.event_details.coaches.count >= selectedRace.event_details.coaches.required">complete</span>
+            <span class="label label-danger" *ngIf="selectedRace.coaches.length < selectedRace.event_details.coaches.required">incomplete</span>
+            <span class="label label-success" *ngIf="selectedRace.coaches.length >= selectedRace.event_details.coaches.required">complete</span>
           </li>
         </ul>
 
       </div>
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Cup Box Trailers
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.cups.count >= selectedRace.event_details.cups.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.cups.count < selectedRace.event_details.cups.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required"></i>
       </h4>
       </div>
 
@@ -155,7 +155,7 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'cups')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -177,8 +177,8 @@
        </table> -->
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> NXS Box Trailers
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.nxs.count >= selectedRace.event_details.nxs.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.nxs.count < selectedRace.event_details.nxs.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.nxs.length >= selectedRace.event_details.nxs.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.nxs.length < selectedRace.event_details.nxs.required"></i>
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.nxs" [editable]="true">
@@ -195,14 +195,14 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'nxs')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Titan Trailers
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.titans.count >= selectedRace.event_details.titans.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.titans.count < selectedRace.event_details.titans.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.titans.length >= selectedRace.event_details.titans.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.titans.length < selectedRace.event_details.titans.required"></i>
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.titans" [editable]="true">
@@ -219,14 +219,14 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'titans')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> TV Trailers
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.tvs.count >= selectedRace.event_details.tvs.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.tvs.count < selectedRace.event_details.tvs.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.tvs.length >= selectedRace.event_details.tvs.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.tvs.length < selectedRace.event_details.tvs.required"></i>
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.tvs" [editable]="true">
@@ -243,14 +243,14 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'tvs')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4> <i class="fa fa-truck fa-2x"></i> Tire/Wheel Trailers
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.wheels.count >= selectedRace.event_details.wheels.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.wheels.count < selectedRace.event_details.wheels.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.wheels.length >= selectedRace.event_details.wheels.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.wheels.length < selectedRace.event_details.wheels.required"></i>
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.wheels" [editable]="true">
@@ -267,14 +267,14 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'wheels')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-bus fa-2x"></i> Coaches
-        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.event_details.coaches.count >= selectedRace.event_details.coaches.required"></i>
-        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.event_details.coaches.count < selectedRace.event_details.coaches.required"></i>
+        <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.coaches.length >= selectedRace.event_details.coaches.required"></i>
+        <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.coaches.length < selectedRace.event_details.coaches.required"></i>
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.coaches" [editable]="true">
@@ -286,7 +286,7 @@
         </p-column>
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
-            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup)" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+            <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'coaches')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
       </p-dataTable>
