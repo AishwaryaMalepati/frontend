@@ -9,7 +9,7 @@
     </p-dropdown>
 
     <button pButton type="button" (click)="show_default_counts=true" label="View Master Resource Count"  class="ui-button-warning"></button>
-    <button pButton type="button" (click)="show_selectedyear_counts=true" label="View {{selectedYear}} Resource Count"  class="ui-button-success"></button>
+    <button pButton type="button" (click)="show_selectedyear_counts=true; getResourceCountByYear()" label="View {{selectedYear}} Resource Count"  class="ui-button-success"></button>
 
     <p-dataTable *ngIf="show_default_counts" [value]="defaultrcounts" scrollable="true" scrollHeight="500px" >
       <p-header>Master Resource Counts
