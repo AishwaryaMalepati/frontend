@@ -24,6 +24,11 @@ export class RacescheduleComponent implements OnInit {
   airTitanDutyEmployees: object;
   availableEmployees: any[]=[];
   selectedYear: string;
+  displayDialog: boolean;
+  isnew: boolean;
+  selectedResourceCount: ResourceCount;
+  resourceCount: ResourceCount;
+  RCType: string;
   errorMessage: string;
   displayDialog: boolean;
   events: any[];
@@ -120,6 +125,7 @@ export class RacescheduleComponent implements OnInit {
         console.log(this.trailers);
         console.log(this.races);
         console.log(this.employeesAtTrack);
+        console.log(this.defaultrcounts);
 
       }, error => this.errorMessage = <any>error);
   }
@@ -145,7 +151,11 @@ export class RacescheduleComponent implements OnInit {
     }
     this.eventService.getList('race_resource_count_by_year', query)
       .subscribe((response) => {
-        this.rcounts = response;
+        this.rcounts = response.map((rcount) => {
+          rcount.race_location = rcount.race;
+          delete rcount.race;
+          return rcount;
+        });
       });
   }
   changeVehicle(evt, cup) {
@@ -247,4 +257,98 @@ export class RacescheduleComponent implements OnInit {
   showDialogToAdd() {
     this.displayDialog = true;
   }
+  addResourceCount(type) {
+    this.isnew = true;
+    this.resourceCount = new ResourceCount();
+    this.RCType = type;
+    this.displayDialog = true;
+  }
+  saveResourceCount(type) {
+    var resourceCounts,
+        apiLink,
+        body;
+
+    if (type === 'default') {
+      resourceCounts = [...this.defaultrcounts];
+      apiLink = 'race_resource_count_default';
+      body = this.resourceCount;
+    } else if (type === 'selectedYear') {
+      resourceCounts = [...this.rcounts];
+      apiLink = 'race_resource_count_by_year';
+      body = Object.assign({year: this.selectedYear, race: this.resourceCount.race_location}, this.resourceCount);
+    }
+
+    if (this.isnew) {
+      this.eventService.saveEvent(body, apiLink)
+        .subscribe((response) => {
+          resourceCounts.push(this.cloneResourceCount(response));
+          this.updateCounts(resourceCounts, type);
+        });
+    } else {
+      resourceCounts[this.findResourceCountByIndex(type)] = this.resourceCount;
+      this.eventService.updateEvent(body, apiLink)
+        .subscribe((response) => {});
+      this.updateCounts(resourceCounts, type);
+    }
+
+    this.resourceCount = null;
+    this.displayDialog = false;
+  }
+  deleteResourceCount(type) {
+    var apiLink;
+
+    let index = this.findResourceCountByIndex(type);
+
+    if (type === 'default') {
+      apiLink = 'race_resource_count_default';
+      this.defaultrcounts = this.defaultrcounts.filter((val,i) => i!=index);
+    } else if (type === 'selectedYear') {
+      apiLink = 'race_resource_count_by_year';
+      this.rcounts = this.rcounts.filter((val,i) => i!=index);
+    }
+
+    this.eventService.deleteEvent(this.resourceCount.id, apiLink)
+      .subscribe((response) => {});
+
+    this.resourceCount = null;
+    this.displayDialog = false;
+  }
+  updateCounts(resourceCounts, type) {
+    if (type === 'default') {
+      this.defaultrcounts = resourceCounts;
+    } else if (type === 'selectedYear') {
+      this.rcounts = resourceCounts;
+    }
+  }
+  cloneResourceCount(c: ResourceCount): ResourceCount {
+    let resourceCount = new ResourceCount();
+    for (let prop in c) {
+      resourceCount[prop] = c[prop];
+    }
+    return resourceCount;
+  }
+  onRowSelect(event, type) {
+    this.isnew = false;
+    this.resourceCount = this.cloneResourceCount(event.data);
+    this.displayDialog = true;
+    this.RCType = type;
+  }
+  findResourceCountByIndex(type) {
+    if (type === 'default') {
+      return this.defaultrcounts.indexOf(this.selectedResourceCount);
+    } else if (type === 'selectedYear') {
+      return this.rcounts.indexOf(this.selectedResourceCount);
+    }
+  }
+}
+
+export class ResourceCount {
+  id: number;
+  race_location: string;
+  cup_box_trailer: number;
+  nxs_box_trailer: number;
+  titan_trailer: number;
+  wheel_trailer: number;
+  coach: number;
+  titan_trucks: number;
 }
