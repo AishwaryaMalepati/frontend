@@ -142,6 +142,7 @@
       </div>
 
       <p-dataTable [value]="selectedRace.cups" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDialogToAdd()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -156,6 +157,11 @@
         <p-column field="gName" header="Group" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'cups')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -182,6 +188,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.nxs" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -198,6 +205,11 @@
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'nxs')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Titan Trailers
@@ -206,6 +218,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.titans" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -222,6 +235,11 @@
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'titans')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> TV Trailers
@@ -230,6 +248,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.tvs" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -246,6 +265,11 @@
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'tvs')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4> <i class="fa fa-truck fa-2x"></i> Tire/Wheel Trailers
@@ -254,6 +278,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.wheels" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -270,6 +295,11 @@
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'wheels')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-bus fa-2x"></i> Coaches
@@ -278,6 +308,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.coaches" [editable]="true">
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Coach" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -289,34 +320,41 @@
             <p-dropdown [(ngModel)]="cup['gName']" (onChange)="changeGroup($event, cup, 'coaches')" [options]="groups" [autoWidth]="false" [style]="{'width':'100%'}" required="true"  appendTo="body"></p-dropdown>
           </ng-template>
         </p-column>
+        <p-column styleClass="col-button">
+          <ng-template let-col let-emp="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Air Titan Duty</h4>
-        <label for="">Add Employees</label>
-        <p-multiSelect [id]="'selectedEmp'" [name]="'selectedEmp'" [style]="{'width':'100%'}" [options]="employeesForDuty" [(ngModel)]="selectedEmps" name="selectedEmps">
-        </p-multiSelect>
-        <div class="text-center">
-          <button type="submit" class="btn btn-success" (click)="saveDutyEmps(1)">Save</button>
-        </div>
-
+      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Air Titan Duty</h4></div>
+            <label for="">Add Employees</label>
+           <table>
+             <tr>
+               <td width="90%">
+                 <p-multiSelect [id]="'selectedEmp'" [name]="'selectedEmp'"  [options]="employeesForDuty" [(ngModel)]="selectedEmps" name="selectedEmps">
+                 </p-multiSelect>
+               </td>
+               <td>
+                 <button type="submit" style="float:right" class="btn btn-success" (click)="saveDutyEmps(1)">Add</button>
+               </td>
+             </tr>
+           </table>
         <p-dataTable [value]="airTitanDutyEmployees">
           <p-column field="name" header="Employee"></p-column>
           <p-column styleClass="col-button">
-            <ng-template pTemplate="header">
-              <button type="button" pButton icon="fa fa-trash"></button>
-            </ng-template>
             <ng-template let-col let-emp="rowData" pTemplate="body">
               <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
             </ng-template>
           </p-column>
         </p-dataTable>
 
-      </div>
-
-      <div class="text-left"><h4>Available Employees</h4></div>
+      <div class="text-left"><h4><i class="fa fa-user fa-2x"></i> Unassigned Employees</h4></div>
       <p-dataTable [value]="availableEmployees">
-        <p-column field="name" header="Employee"></p-column>
+        <p-header>Employees</p-header>
+        <p-column field="name" [style]= "{'width':'100px'}"></p-column>
       </p-dataTable>
-  </div>
+
+    </div>
   <!--<app-footer></app-footer>-->
 </div>

@@ -25,6 +25,8 @@ export class RacescheduleComponent implements OnInit {
   availableEmployees: any[]=[];
   selectedYear: string;
   errorMessage: string;
+  displayDialog: boolean;
+  events: any[];
   public constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
@@ -234,12 +236,15 @@ export class RacescheduleComponent implements OnInit {
         if (response['success']) {
           this.airTitanDutyEmployees = response['data'];
         }
-      })
+      });
   }
   updateResourceCountByYear() {
     this.eventService.saveEvent({year: this.selectedYear}, 'race_resource_count_by_year/update_counts')
       .subscribe((response) => {
         this.rcounts = response;
-      })
+      });
+  }
+  showDialogToAdd() {
+    this.displayDialog = true;
   }
 }
