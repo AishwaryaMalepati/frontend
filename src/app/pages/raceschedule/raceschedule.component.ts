@@ -24,7 +24,6 @@ export class RacescheduleComponent implements OnInit {
   airTitanDutyEmployees: object;
   availableEmployees: any[]=[];
   selectedYear: string;
-  displayDialog: boolean;
   isnew: boolean;
   selectedResourceCount: ResourceCount;
   resourceCount: ResourceCount;
@@ -36,7 +35,7 @@ export class RacescheduleComponent implements OnInit {
 
   ngOnInit() {
     Observable.forkJoin([ this.eventService.getList('vehicle'), this.eventService.getList('trailer'), this.eventService.getList('groups'),
-      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('employees_at_track'), this.eventService.getList('employees/available')])
+      this.eventService.getList('race_schedule'), this.eventService.getList('race_resource_count_default'), this.eventService.getList('employees_at_track')])
       .subscribe((response) => {
         this.vehicles = response[0].filter( (v) => {
           if(v.type === 6) {
@@ -118,8 +117,6 @@ export class RacescheduleComponent implements OnInit {
           }
           this.employeesAtTrack[loc_id] = employees;
         }
-
-        this.availableEmployees = response[6].map((emp) => {emp.name = emp.first_name + ' ' + emp.last_name; return emp; });
 
         console.log(this.vehicles);
         console.log(this.trailers);
@@ -239,6 +236,16 @@ export class RacescheduleComponent implements OnInit {
           this.airTitanDutyEmployees = response['data'];
         }
       });
+
+    var availableEmps = [];
+    for (const loc_id of Object.keys(this.employeesAtTrack)) {
+      if (loc_id !== this.selectedRace['race_location_id']) {
+        for (var i=0; i < this.employeesAtTrack[loc_id].length; i++) {
+          availableEmps.push(this.employeesAtTrack[loc_id][i]);
+        }
+      }
+    }
+    this.availableEmployees = availableEmps;
   }
   removeEmployee(emp_id, duty_id) {
     this.eventService.updateEvent({'id': emp_id, 'duty_id': duty_id, 'race_id': this.selectedRace['id']}, 'race_duty')
