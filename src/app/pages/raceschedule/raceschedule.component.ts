@@ -25,6 +25,7 @@ export class RacescheduleComponent implements OnInit {
   availableEmployees: any[]=[];
   selectedYear: string;
   isnew: boolean;
+  displayDialog: boolean;
   selectedResourceCount: ResourceCount;
   resourceCount: ResourceCount;
   RCType: string;
