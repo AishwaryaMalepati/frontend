@@ -30,7 +30,6 @@ export class RacescheduleComponent implements OnInit {
   resourceCount: ResourceCount;
   RCType: string;
   errorMessage: string;
-  displayDialog: boolean;
   events: any[];
   public constructor(private eventService: EventService, private router: Router) { }
 
