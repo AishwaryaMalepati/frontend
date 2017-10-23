@@ -18,7 +18,7 @@ export class RacescheduleComponent implements OnInit {
   trailers: any[]=[];
   groups: any[]=[];
   employeesAtTrack: object;
-  employeesForDuty: object;
+  employeesForDuty: any[]=[];
   selectedRace: object;
   selectedEmps: any[]=[];
   airTitanDutyEmployees: object;
@@ -237,14 +237,28 @@ export class RacescheduleComponent implements OnInit {
         }
       });
 
-    var availableEmps = [];
+    var availableEmps = [], tempEmps = [];
     for (const loc_id of Object.keys(this.employeesAtTrack)) {
-      if (loc_id !== this.selectedRace['race_location_id']) {
+      if (loc_id != this.selectedRace['race_location_id']) {
         for (var i=0; i < this.employeesAtTrack[loc_id].length; i++) {
           availableEmps.push(this.employeesAtTrack[loc_id][i]);
         }
       }
     }
+    availableEmps.forEach((availableEmp) => {
+      var empForDutyIds = [];
+      if (this.employeesForDuty) {
+        this.employeesForDuty.forEach((empForDuty) => {
+          if (availableEmp['value'] != empForDuty['value'] && tempEmps.indexOf(availableEmp) === -1 &&
+              empForDutyIds.indexOf(availableEmp['value']) === -1) {
+            tempEmps.push(availableEmp);
+          } else {
+            empForDutyIds.push(empForDuty['value']);
+          }
+        });
+      }
+    });
+    availableEmps = tempEmps.slice();
     this.availableEmployees = availableEmps;
   }
   removeEmployee(emp_id, duty_id) {
