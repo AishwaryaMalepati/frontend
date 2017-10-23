@@ -28,7 +28,6 @@
     <p-dataTable *ngIf="show_selectedyear_counts" [value]="rcounts" scrollable="true" scrollHeight="500px" selectionMode="single" [(selection)]="selectedResourceCount" (onRowSelect)="onRowSelect($event, 'selectedYear')">
       <p-header>{{selectedYear}} Resource Counts
         <button type="button" pButton icon="fa fa-window-close" class="ui-button-danger" style="float:right" (click)="show_selectedyear_counts=false" label="Close"></button>
-        <button type="button" pButton icon="fa fa-download" style="float:right" (click)="updateResourceCountByYear()" label="Import from Master"></button>
       </p-header>
       <p-column field="race_location" header="Race Location" [style]="{'width':'150px'}"></p-column>
       <p-column field="cup_box_trailer" header="Cup Box Trailers" [style]="{'width':'150px'}"></p-column>
