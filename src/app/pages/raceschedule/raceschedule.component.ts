@@ -246,11 +246,17 @@ export class RacescheduleComponent implements OnInit {
       }
     }
     availableEmps.forEach((availableEmp) => {
-      this.employeesForDuty.forEach((empForDuty) => {
-        if (availableEmp['value'] !== empForDuty['value'] && tempEmps.indexOf(availableEmp) === -1) {
-          tempEmps.push(availableEmp);
-        }
-      });
+      var empForDutyIds = [];
+      if (this.employeesForDuty) {
+        this.employeesForDuty.forEach((empForDuty) => {
+          if (availableEmp['value'] != empForDuty['value'] && tempEmps.indexOf(availableEmp) === -1 &&
+              empForDutyIds.indexOf(availableEmp['value']) === -1) {
+            tempEmps.push(availableEmp);
+          } else {
+            empForDutyIds.push(empForDuty['value']);
+          }
+        });
+      }
     });
     availableEmps = tempEmps.slice();
     this.availableEmployees = availableEmps;
