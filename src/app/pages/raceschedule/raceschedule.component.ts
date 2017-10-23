@@ -237,29 +237,11 @@ export class RacescheduleComponent implements OnInit {
         }
       });
 
-    var availableEmps = [], tempEmps = [];
-    for (const loc_id of Object.keys(this.employeesAtTrack)) {
-      if (loc_id != this.selectedRace['race_location_id']) {
-        for (var i=0; i < this.employeesAtTrack[loc_id].length; i++) {
-          availableEmps.push(this.employeesAtTrack[loc_id][i]);
-        }
-      }
-    }
-    availableEmps.forEach((availableEmp) => {
-      var empForDutyIds = [];
-      if (this.employeesForDuty) {
-        this.employeesForDuty.forEach((empForDuty) => {
-          if (availableEmp['value'] != empForDuty['value'] && tempEmps.indexOf(availableEmp) === -1 &&
-              empForDutyIds.indexOf(availableEmp['value']) === -1) {
-            tempEmps.push(availableEmp);
-          } else {
-            empForDutyIds.push(empForDuty['value']);
-          }
-        });
-      }
-    });
-    availableEmps = tempEmps.slice();
-    this.availableEmployees = availableEmps;
+    var query = 'race_location=' + this.selectedRace['race_location_id'] + '&year=' + this.selectedRace['year'];
+    this.eventService.getList('employeegroup/available', query)
+      .subscribe((response) => {
+        this.availableEmployees = response;
+      });
   }
   removeEmployee(emp_id, duty_id) {
     this.eventService.updateEvent({'id': emp_id, 'duty_id': duty_id, 'race_id': this.selectedRace['id']}, 'race_duty')
