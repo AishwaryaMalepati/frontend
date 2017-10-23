@@ -269,12 +269,6 @@ export class RacescheduleComponent implements OnInit {
         }
       });
   }
-  updateResourceCountByYear() {
-    this.eventService.saveEvent({year: this.selectedYear}, 'race_resource_count_by_year/update_counts')
-      .subscribe((response) => {
-        this.rcounts = response;
-      });
-  }
   showDialogToAdd() {
     this.displayDialog = true;
   }
