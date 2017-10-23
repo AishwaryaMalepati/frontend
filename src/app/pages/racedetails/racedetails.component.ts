@@ -36,6 +36,18 @@ export class RacedetailsComponent implements OnInit {
       races.push(this.race);
       this.eventService.saveEvent(this.race, 'race') .subscribe((response) => {
       });
+
+      var defaultResourceCount,
+          body;
+
+      let curRace = this.race;
+      this.eventService.getList('race_resource_count_default')
+        .subscribe((response) => {
+          defaultResourceCount = response;
+          body = defaultResourceCount.filter((d, i) => { if (d['race_location'] === curRace.race_location) return true;});
+          body = Object.assign({year: curRace.year, race: body[0]['race_location']}, body[0]);
+          this.eventService.saveEvent(body, 'race_resource_count_by_year').subscribe((response) => {});
+        });
     }
     else {
       races[this.findSelectedRaceIndex()] = this.race;
