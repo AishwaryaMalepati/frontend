@@ -78,7 +78,7 @@ export class Race {
   id: number;
   race_location: string;
   year: number;
-  mec_date: any;
-  nxs_date: any;
-  ctws_date: any;
+  mec_date: Date;
+  nxs_date: Date;
+  ctws_date: Date;
 }
