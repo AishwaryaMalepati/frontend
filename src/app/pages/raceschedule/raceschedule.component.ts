@@ -26,6 +26,8 @@ export class RacescheduleComponent implements OnInit {
   selectedYear: string;
   isnew: boolean;
   displayDialog: boolean;
+  displayDriverDialog: boolean;
+  newEvent: MyEvent;
   selectedResourceCount: ResourceCount;
   resourceCount: ResourceCount;
   RCType: string;
@@ -254,6 +256,97 @@ export class RacescheduleComponent implements OnInit {
   showDialogToAdd() {
     this.displayDialog = true;
   }
+  showDriverDialog(group) {
+    this.displayDriverDialog = true;
+    this.newEvent = new MyEvent();
+    this.newEvent.location = this.selectedRace['race_location'];
+    this.newEvent.employee_race_group = group;
+  }
+  saveEvent() {
+    this.eventService.saveEvent(this.newEvent, 'employeelocations')
+      .subscribe((response) => {
+        var dName, vName, gName, tName, gAlias;
+        for (var i=0; i < this.availableEmployees.length; i++) {
+          if (this.availableEmployees[i]['value'] == this.newEvent.employee) {
+            dName = this.availableEmployees[i]['label'];
+            break;
+          }
+        }
+        for(var i=0; i < this.vehicles.length; i++) {
+          if (this.vehicles[i]['value'] == response.employee_vehicle) {
+            vName = this.vehicles[i]['label'];
+            break;
+          }
+        }
+        if (!vName) {
+          for (var i=0; i < this.coaches.length; i++) {
+            if (this.coaches[i]['value'] == response.employee_vehicle) {
+              vName = this.coaches[i]['label'];
+            }
+          }
+        }
+        for (var i=0; i < this.groups.length; i++) {
+          if (this.groups[i]['value'] == response.employee_race_group) {
+            gName = this.groups[i]['label'];
+            break;
+          }
+        }
+        for (var i=0; i < this.trailers.length; i++) {
+          if (this.trailers[i]['value'] == response.employee_trailer) {
+            tName = this.trailers[i]['label'];
+            break;
+          }
+        }
+
+        if (gName === 'Box Truck') {
+          gAlias = 'cups';
+        } else if (gName === 'Xfinity') {
+          gAlias = 'nxs';
+        } else if (gName === 'Air Titan') {
+          gAlias = 'titans';
+        } else if (gName === 'Coach') {
+          gAlias = 'coaches';
+        } else if (gName === 'Wheels') {
+          gAlias = 'wheels';
+        } else if (gName === 'TV') {
+          gAlias = 'tvs';
+        }
+
+        var selectedRace = this.selectedRace;
+        selectedRace[gAlias].push({
+          dId: response.employee,
+          dName: dName,
+          vId: response.employee_vehicle,
+          vehicle: vName,
+          gId: response.employee_race_group,
+          gName: gName,
+          tId: response.employee_trailer,
+          tName: tName
+        });
+        this.selectedRace = JSON.parse(JSON.stringify(selectedRace));
+
+        this.availableEmployees = this.availableEmployees.filter((emp) => {
+          if (emp['value'] != response.employee) {
+            return true;
+          }
+        });
+
+        this.displayDriverDialog = false;
+      });
+  }
+  removeRaceEmployee(empDetails, type) {
+    this.eventService.deleteEventinRange('createschedule/delete_emp_events/?emp_id=' + empDetails['dId'])
+      .subscribe((response) => {
+        this.selectedRace[type] = this.selectedRace[type].filter((emp) => {if (emp['dId'] != empDetails['dId']) return true;});
+
+        var availableEmps = this.availableEmployees;
+        availableEmps.push({
+          label: empDetails['dName'],
+          value: empDetails['dId']
+        });
+        this.availableEmployees = JSON.parse(JSON.stringify(availableEmps));
+      });
+  }
   addResourceCount(type) {
     this.isnew = true;
     this.resourceCount = new ResourceCount();
@@ -337,6 +430,14 @@ export class RacescheduleComponent implements OnInit {
       return this.rcounts.indexOf(this.selectedResourceCount);
     }
   }
+  assignEmp(e) {
+    var emp_id = e.data['value'];
+
+    this.displayDriverDialog = true;
+    this.newEvent = new MyEvent();
+    this.newEvent.employee = emp_id;
+    this.newEvent.location = this.selectedRace['race_location'];
+  }
 }
 
 export class ResourceCount {
@@ -348,4 +449,14 @@ export class ResourceCount {
   wheel_trailer: number;
   coach: number;
   titan_trucks: number;
+}
+
+export class MyEvent {
+  id: number;
+  location: string;
+  start: any;
+  end: any;
+  employee: number;
+  employee_race_group: number;
+  // allDay: boolean = true;
 }
