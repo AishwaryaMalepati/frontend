@@ -142,6 +142,37 @@
 
       </div>
 
+      <p-dialog header="Add Driver" [(visible)]="displayDriverDialog" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
+              [style]="{'overflow':'visible'}" [resizable]="false">
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="newEvent">
+        <div class="ui-grid-col-4"><label for="group">Group: </label></div>
+        <div class="ui-grid-col-8">
+          <select class="form-control" id="group" required [(ngModel)]="newEvent.employee_race_group" name="group">
+            <option *ngFor="let group of groups" [value]="group.value">{{group.label}}</option>
+          </select>
+        </div>
+        <div class="ui-grid-col-4"><label for="emp">Employee: </label></div>
+        <div class="ui-grid-col-8">
+          <select class="form-control" id="emp" required [(ngModel)]="newEvent.employee" name="emp">
+            <option *ngFor="let emp of availableEmployees" [value]="emp.value">{{emp.label}}</option>
+          </select>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="start">Start: </label></div>
+          <div class="ui-grid-col-8"><p-calendar [(ngModel)]="newEvent.start" dateFormat="yy-mm-dd" [showTime]="true"></p-calendar></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="end">End: </label></div>
+          <div class="ui-grid-col-8"><p-calendar [(ngModel)]="newEvent.end" dateFormat="yy-mm-dd" [showTime]="true"></p-calendar></div>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa-check" (click)="saveEvent(selectedGroup)" label="Save"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+
       <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Cup Box Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required"></i>
@@ -149,7 +180,7 @@
       </div>
 
       <p-dataTable [value]="selectedRace.cups" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDialogToAdd()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.cups.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -168,7 +199,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'cups')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -195,7 +226,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.nxs" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.nxs.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -214,7 +245,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'nxs')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -225,7 +256,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.titans" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.titans.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -244,7 +275,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'titans')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -255,7 +286,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.tvs" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.tvs.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -274,7 +305,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'tvs')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -285,7 +316,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.wheels" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.wheels.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Tractor" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -304,7 +335,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'wheels')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -315,7 +346,7 @@
       </h4>
       </div>
       <p-dataTable [value]="selectedRace.coaches" [editable]="true">
-        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="addemployeetorace()" label="Add Driver" style="float:right"></button></p-header>
+        <p-header>Drivers <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.coaches.group_id)" label="Add Driver" style="float:right"></button></p-header>
         <p-column field="dName" header="Driver"></p-column>
         <p-column field="vehicle" header="Coach" [editable]="true">
           <ng-template let-col let-cup="rowData" pTemplate="editor">
@@ -329,7 +360,7 @@
         </p-column>
         <p-column styleClass="col-button">
           <ng-template let-col let-emp="rowData" pTemplate="body">
-            <button type="button" pButton (click)="removeEmployee(emp['id'], 1)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="removeRaceEmployee(emp, 'coaches')" icon="fa fa-trash"></button>
           </ng-template>
         </p-column>
       </p-dataTable>
@@ -357,7 +388,7 @@
         </p-dataTable>
 
       <div class="text-left"><h4><i class="fa fa-user fa-2x"></i> Unassigned Employees</h4></div>
-      <p-dataTable [value]="availableEmployees">
+      <p-dataTable [value]="availableEmployees" selectionMode="single" (onRowClick)="assignEmp($event)">
         <p-header>Employees</p-header>
         <p-column field="label" [style]= "{'width':'100px'}"></p-column>
       </p-dataTable>
