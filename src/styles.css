@@ -144,3 +144,13 @@ background: #eee;
 .ui-inputtext{
   width: 100%;
 }
+
+.row {
+  display: flex; /* equal height of the children */
+}
+
+.col {
+  flex: 1; /* additionally, equal width */
+
+  padding: 1em;
+}

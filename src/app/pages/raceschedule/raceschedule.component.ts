@@ -438,6 +438,17 @@ export class RacescheduleComponent implements OnInit {
     this.newEvent.employee = emp_id;
     this.newEvent.location = this.selectedRace['race_location'];
   }
+  goTo(location: string): void {
+    window.location.hash = '';
+    window.location.hash = location;
+  }
+  navigateTo(location: string): void {
+// location will be a valid CSS ID selector; i.e. it should be preceded with '#'
+    window.location.hash = location;
+    setTimeout(() => {
+      document.querySelector(location).parentElement.scrollIntoView();
+    });
+  }
 }
 
 export class ResourceCount {

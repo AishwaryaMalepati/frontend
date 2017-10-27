@@ -90,57 +90,85 @@
       <div>
         Progress:
         <span><p-progressBar [value]="selectedRace.total_progress"></p-progressBar></span>
-      </div>
-      <br>
-      <div class="well">
-        <p>
-          Schedule summary: Required vs Scheduled
-        <ul class="list-group">
-          <li class="list-group-item justify-content-between ">
-            Cup Box Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.cups.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required">complete</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            NXS Box Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.nxs.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.nxs.length < selectedRace.event_details.nxs.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.nxs.length >= selectedRace.event_details.nxs.required">complete</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Titan Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.titans.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.titans.length < selectedRace.event_details.titans.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.titans.length >= selectedRace.event_details.titans.required">complete</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Tv Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.tvs.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.tvs.length < selectedRace.event_details.tvs.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.tvs.length >= selectedRace.event_details.tvs.required">complete</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Tire/Wheel Trailers
-            <span class="badge badge-default badge-pill">{{selectedRace.wheels.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.wheels.length < selectedRace.event_details.wheels.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.wheels.length >= selectedRace.event_details.wheels.required">complete</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Coaches
-            <span class="badge badge-default badge-pill">{{selectedRace.coaches.length}}</span>
-            <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.required}}</span>
-            <span class="label label-danger" *ngIf="selectedRace.coaches.length < selectedRace.event_details.coaches.required">incomplete</span>
-            <span class="label label-success" *ngIf="selectedRace.coaches.length >= selectedRace.event_details.coaches.required">complete</span>
-          </li>
-        </ul>
+        <br>
+        <div style="width:100%">
+          <div style="width:50%; float:left;">
+            <div class="well">
+              Important Dates
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-success">MEC Race: {{selectedRace.mec_date}} </li>
+              <li class="list-group-item list-group-item-warning">NXS Race: {{selectedRace.nxs_date}} </li>
+              <li class="list-group-item list-group-item-info">CTWS Race: {{selectedRace.ctws_date}}</li>
+              <li class="list-group-item">AirGas Bottle Unload: {{selectedRace.airgas_bottle_unload}}</li>
+              <li class="list-group-item">Cup Box Unload: {{selectedRace.cup_box_unload}}</li>
+              <li class="list-group-item">NXS Box Unload: {{selectedRace.nxs_box_unload}}</li>
+              <li class="list-group-item">Wheel Unload: {{selectedRace.wheel_unload}}</li>
+              <li class="list-group-item">Titan Setup: {{selectedRace.titan_set_up}}</li>
+              <li class="list-group-item">TV Setup: {{selectedRace.tv_set_up}}</li>
+              <li class="list-group-item">Saturday Box Arrival: {{selectedRace.sat_box_arrival}}</li>
+              <li class="list-group-item">Coaches Park Day: {{selectedRace.coaches_park_day}}</li>
+            </ul>
+            </div>
+          </div>
+          <div style="width:50%; float:right;">
+            <div class="well">
+                Schedule summary: Required vs Scheduled
+              <ul class="list-group">
+                <li class="list-group-item justify-content-between ">
+                  <a (click)="goTo('cup_box_trailer')">Cup Box Trailers</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.cups.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.cups.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('nxs_box_trailer')">NXS Box Trailers</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.nxs.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.nxs.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.nxs.length < selectedRace.event_details.nxs.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.nxs.length >= selectedRace.event_details.nxs.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('titan_trailer')">Titan Trailers</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.titans.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.titans.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.titans.length < selectedRace.event_details.titans.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.titans.length >= selectedRace.event_details.titans.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('tv_trailer')">Tv Trailers</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.tvs.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.tvs.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.tvs.length < selectedRace.event_details.tvs.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.tvs.length >= selectedRace.event_details.tvs.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('wheel_trailer')">Tire/Wheel Trailers</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.wheels.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.wheels.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.wheels.length < selectedRace.event_details.wheels.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.wheels.length >= selectedRace.event_details.wheels.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('coach')">Coaches</a>
+                  <span class="badge badge-default badge-pill">{{selectedRace.coaches.length}}</span>
+                  <span class="badge badge-default badge-pill">{{selectedRace.event_details.coaches.required}}</span>
+                  <span class="label label-danger" *ngIf="selectedRace.coaches.length < selectedRace.event_details.coaches.required">incomplete</span>
+                  <span class="label label-success" *ngIf="selectedRace.coaches.length >= selectedRace.event_details.coaches.required">complete</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('air_titan_duty')">Air Titan Duty</a>
+                </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('unassigned_employees')">Unassigned Employees</a>
+                </li>
+              </ul>
+              <br><br><br><br><br><br><br><br>
+            </div>
 
-      </div>
+          </div>
+        </div>
+        <div style="clear: both;"></div>
 
       <p-dialog header="Add Driver" [(visible)]="displayDriverDialog" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
               [style]="{'overflow':'visible'}" [resizable]="false">
@@ -173,7 +201,7 @@
       </p-footer>
     </p-dialog>
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Cup Box Trailers
+      <div id="cup_box_trailer" class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Cup Box Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.cups.length >= selectedRace.event_details.cups.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.cups.length < selectedRace.event_details.cups.required"></i>
       </h4>
@@ -220,7 +248,7 @@
          </tbody>
        </table> -->
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> NXS Box Trailers
+      <div id="nxs_box_trailer" class="text-left"><h4><i class="fa fa-truck fa-2x"></i> NXS Box Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.nxs.length >= selectedRace.event_details.nxs.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.nxs.length < selectedRace.event_details.nxs.required"></i>
       </h4>
@@ -250,7 +278,7 @@
         </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Titan Trailers
+      <div id="titan_trailer" class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Titan Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.titans.length >= selectedRace.event_details.titans.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.titans.length < selectedRace.event_details.titans.required"></i>
       </h4>
@@ -280,7 +308,7 @@
         </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> TV Trailers
+      <div id="tv_trailer" class="text-left"><h4><i class="fa fa-truck fa-2x"></i> TV Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.tvs.length >= selectedRace.event_details.tvs.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.tvs.length < selectedRace.event_details.tvs.required"></i>
       </h4>
@@ -310,7 +338,7 @@
         </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4> <i class="fa fa-truck fa-2x"></i> Tire/Wheel Trailers
+      <div id="wheel_trailer" class="text-left"><h4> <i class="fa fa-truck fa-2x"></i> Tire/Wheel Trailers
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.wheels.length >= selectedRace.event_details.wheels.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.wheels.length < selectedRace.event_details.wheels.required"></i>
       </h4>
@@ -340,7 +368,7 @@
         </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-bus fa-2x"></i> Coaches
+      <div id="coach" class="text-left"><h4><i class="fa fa-bus fa-2x"></i> Coaches
         <i class = "fa fa-check-circle" style="color:green" aria-hidden="true" *ngIf="selectedRace.coaches.length >= selectedRace.event_details.coaches.required"></i>
         <i class="fa fa-exclamation-circle" style="color:red" aria-hidden="true" *ngIf="selectedRace.coaches.length < selectedRace.event_details.coaches.required"></i>
       </h4>
@@ -365,7 +393,7 @@
         </p-column>
       </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Air Titan Duty</h4></div>
+      <div id="air_titan_duty" class="text-left"><h4><i class="fa fa-truck fa-2x"></i> Air Titan Duty</h4></div>
             <label for="">Add Employees</label>
            <table>
              <tr>
@@ -387,9 +415,9 @@
           </p-column>
         </p-dataTable>
 
-      <div class="text-left"><h4><i class="fa fa-user fa-2x"></i> Unassigned Employees</h4></div>
+      <div id="unassigned_employees" class="text-left"><h4><i class="fa fa-user fa-2x"></i> Unassigned Employees</h4></div>
       <p-dataTable [value]="availableEmployees" selectionMode="single" (onRowClick)="assignEmp($event)">
-        <p-header>Employees</p-header>
+        <p-header>Employees <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.cups.group_id)" label="Assign Employee" style="float:right"></button></p-header>
         <p-column field="label" [style]= "{'width':'100px'}"></p-column>
       </p-dataTable>
 
