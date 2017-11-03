@@ -162,8 +162,11 @@
                 <li class="list-group-item justify-content-between">
                   <a (click)="goTo('unassigned_employees')">Unassigned Employees</a>
                 </li>
+                <li class="list-group-item justify-content-between">
+                  <a (click)="goTo('hotels')">Hotels</a>
+                </li>
               </ul>
-              <br><br><br><br><br><br><br><br>
+              <br><br><br><br><br><br>
             </div>
 
           </div>
@@ -415,6 +418,22 @@
           </p-column>
         </p-dataTable>
 
+        <div id="hotels" class="text-left"><h4><i class="fa fa-bed fa-2x"></i> Hotels </h4></div>
+        <app-scheduler
+          editable="true"
+          droppable="true"
+          defaultView="timelineMonth"
+          [events]="events"
+          [resources]="resources"
+          [defaultDate]="defaultDate"
+          slotLabelFormat= "DD MMM, HH:mm"
+          resourceAreaWidth="250"
+          titleFormat="YYYY-MM-DD dddd"
+          nowIndicator="true"
+          [header]="headerConfig"
+          [resourceColumns]="resourceCol"
+          (onEventDrop)="handleEventDrop($event)" (onDayClick)="handleDayClick($event)" (onEventResize)="handleEventDrop($event)" (onEventReceive)="handleEventDrop($event)" (onEventClick)="handleEventClick($event)"
+        ></app-scheduler>
       <div id="unassigned_employees" class="text-left"><h4><i class="fa fa-user fa-2x"></i> Unassigned Employees</h4></div>
       <p-dataTable [value]="availableEmployees" selectionMode="single" (onRowClick)="assignEmp($event)">
         <p-header>Employees <button pButton icon="fa-plus" pButton type="button" (click)="showDriverDialog(selectedRace.event_details.cups.group_id)" label="Assign Employee" style="float:right"></button></p-header>
